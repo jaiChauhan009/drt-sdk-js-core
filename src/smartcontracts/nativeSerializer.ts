@@ -117,7 +117,7 @@ export namespace NativeSerializer {
 
     // In a future version of the type inference system, re-packing logic will be removed.
     // The client code will be responsible for passing the correctly packed arguments (variadic arguments explicitly packed as arrays).
-    // For developers, calling `foo(["erd1", 42, [1, 2, 3]])` will be less ambiguous than `foo(["erd1", 42, 1, 2, 3])`.
+    // For developers, calling `foo(["drt1", 42, [1, 2, 3]])` will be less ambiguous than `foo(["drt1", 42, 1, 2, 3])`.
     // Furthermore, multiple counted-variadic arguments cannot be expressed in the current variant.
     // E.g. now, it's unreasonable to decide that `foo([1, 2, 3, "a", "b", "c"])` calls `foo(counted-variadic<int>, counted-variadic<string>)`.
     function repackNonCountedVariadicParameters(args: any[], endpoint: EndpointDefinition) {

@@ -8,10 +8,10 @@ import { TransactionPayload } from "./transactionPayload";
 /**
  * @deprecated Use {@link TransferTransactionsFactory} instead.
  */
-export class ESDTTransferPayloadBuilder {
+export class DCDTTransferPayloadBuilder {
     payment: ITokenTransfer = TokenTransfer.fungibleFromAmount("", "0", 0);
 
-    setPayment(payment: ITokenTransfer): ESDTTransferPayloadBuilder {
+    setPayment(payment: ITokenTransfer): DCDTTransferPayloadBuilder {
         this.payment = payment;
         return this;
     }
@@ -25,7 +25,7 @@ export class ESDTTransferPayloadBuilder {
         ];
 
         let { argumentsString } = new ArgSerializer().valuesToString(args);
-        let data = `ESDTTransfer@${argumentsString}`;
+        let data = `DCDTTransfer@${argumentsString}`;
         return new TransactionPayload(data);
     }
 }
@@ -33,16 +33,16 @@ export class ESDTTransferPayloadBuilder {
 /**
  * @deprecated Use {@link TransferTransactionsFactory} instead.
  */
-export class ESDTNFTTransferPayloadBuilder {
+export class DCDTNFTTransferPayloadBuilder {
     payment: ITokenTransfer = TokenTransfer.nonFungible("", 0);
     destination: IAddress = Address.empty();
 
-    setPayment(payment: ITokenTransfer): ESDTNFTTransferPayloadBuilder {
+    setPayment(payment: ITokenTransfer): DCDTNFTTransferPayloadBuilder {
         this.payment = payment;
         return this;
     }
 
-    setDestination(destination: IAddress): ESDTNFTTransferPayloadBuilder {
+    setDestination(destination: IAddress): DCDTNFTTransferPayloadBuilder {
         this.destination = destination;
         return this;
     }
@@ -60,7 +60,7 @@ export class ESDTNFTTransferPayloadBuilder {
         ];
 
         let { argumentsString } = new ArgSerializer().valuesToString(args);
-        let data = `ESDTNFTTransfer@${argumentsString}`;
+        let data = `DCDTNFTTransfer@${argumentsString}`;
         return new TransactionPayload(data);
     }
 }
@@ -68,16 +68,16 @@ export class ESDTNFTTransferPayloadBuilder {
 /**
  * @deprecated Use {@link TransferTransactionsFactory} instead.
  */
-export class MultiESDTNFTTransferPayloadBuilder {
+export class MultiDCDTNFTTransferPayloadBuilder {
     payments: ITokenTransfer[] = [];
     destination: IAddress = Address.empty();
 
-    setPayments(payments: ITokenTransfer[]): MultiESDTNFTTransferPayloadBuilder {
+    setPayments(payments: ITokenTransfer[]): MultiDCDTNFTTransferPayloadBuilder {
         this.payments = payments;
         return this;
     }
 
-    setDestination(destination: IAddress): MultiESDTNFTTransferPayloadBuilder {
+    setDestination(destination: IAddress): MultiDCDTNFTTransferPayloadBuilder {
         this.destination = destination;
         return this;
     }
@@ -104,7 +104,7 @@ export class MultiESDTNFTTransferPayloadBuilder {
         }
 
         let { argumentsString } = new ArgSerializer().valuesToString(args);
-        let data = `MultiESDTNFTTransfer@${argumentsString}`;
+        let data = `MultiDCDTNFTTransfer@${argumentsString}`;
         return new TransactionPayload(data);
     }
 }

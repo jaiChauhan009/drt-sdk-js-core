@@ -22,7 +22,7 @@ describe("test relayed v1 transaction builder", function () {
         const innerTx = new Transaction({
             nonce: 15,
             sender: alice.address,
-            receiver: Address.fromBech32("erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqzllls8a5w6u"),
+            receiver: Address.fromBech32("drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqzllls6prdez"),
             gasLimit: 10000000,
             chainID: "1",
             data: new TransactionPayload("getContractConfig"),
@@ -54,7 +54,7 @@ describe("test relayed v1 transaction builder", function () {
         const innerTx = new Transaction({
             nonce: 198,
             sender: bob.address,
-            receiver: Address.fromBech32("erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqzllls8a5w6u"),
+            receiver: Address.fromBech32("drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqzllls6prdez"),
             gasLimit: 60000000,
             chainID: networkConfig.ChainID,
             data: new TransactionPayload("getContractConfig"),
@@ -93,7 +93,7 @@ describe("test relayed v1 transaction builder", function () {
 
         const innerTx = new Transaction({
             nonce: 208,
-            value: TokenTransfer.egldFromAmount(1),
+            value: TokenTransfer.rewaFromAmount(1),
             sender: carol.address,
             receiver: alice.address,
             senderUsername: "carol",
@@ -135,7 +135,7 @@ describe("test relayed v1 transaction builder", function () {
 
         const innerTx = new Transaction({
             nonce: 208,
-            value: TokenTransfer.egldFromAmount(1999999),
+            value: TokenTransfer.rewaFromAmount(1999999),
             sender: carol.address,
             receiver: alice.address,
             senderUsername: "carol",
@@ -178,7 +178,7 @@ describe("test relayed v1 transaction builder", function () {
         const innerTx = new Transaction({
             nonce: 198,
             sender: bob.address,
-            receiver: Address.fromBech32("erd1qqqqqqqqqqqqqpgq54tsxmej537z9leghvp69hfu4f8gg5eu396q83gnnz"),
+            receiver: Address.fromBech32("drt1qqqqqqqqqqqqqpgq54tsxmej537z9leghvp69hfu4f8gg5eu396q6dlssu"),
             gasLimit: 60000000,
             chainID: networkConfig.ChainID,
             data: new TransactionPayload("getContractConfig"),
@@ -222,7 +222,7 @@ describe("test relayed v1 transaction builder", function () {
         const innerTx = new Transaction({
             nonce: 198,
             sender: bob.address,
-            receiver: Address.fromBech32("erd1qqqqqqqqqqqqqpgq54tsxmej537z9leghvp69hfu4f8gg5eu396q83gnnz"),
+            receiver: Address.fromBech32("drt1qqqqqqqqqqqqqpgq54tsxmej537z9leghvp69hfu4f8gg5eu396q6dlssu"),
             gasLimit: 60000000,
             chainID: networkConfig.ChainID,
             data: new TransactionPayload("addNumber"),

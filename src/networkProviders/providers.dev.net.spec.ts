@@ -12,23 +12,23 @@ import { TransactionEventData } from "./transactionEvents";
 import { TransactionOnNetwork } from "./transactions";
 
 describe("test network providers on devnet: Proxy and API", function () {
-    let alice = new Address("erd1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssycr6th");
-    let carol = new Address("erd1k2s324ww2g0yj38qn2ch2jwctdy8mnfxep94q9arncc6xecg3xaq6mjse8");
-    let dan = new Address("erd1kyaqzaprcdnv4luvanah0gfxzzsnpaygsy6pytrexll2urtd05ts9vegu7");
+    let alice = new Address("drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf");
+    let carol = new Address("drt1k2s324ww2g0yj38qn2ch2jwctdy8mnfxep94q9arncc6xecg3xaq889n6e");
+    let dan = new Address("drt1kyaqzaprcdnv4luvanah0gfxzzsnpaygsy6pytrexll2urtd05tscswtlq");
     const MAX_NUMBER_OF_ITEMS_BY_DEFAULT = 20;
 
-    let apiProvider: INetworkProvider = new ApiNetworkProvider("https://devnet-api.multiversx.com", {
+    let apiProvider: INetworkProvider = new ApiNetworkProvider("https://devnet-api.dharitri.com", {
         timeout: 10000,
         clientName: "test",
     });
-    let proxyProvider: INetworkProvider = new ProxyNetworkProvider("https://devnet-gateway.multiversx.com", {
+    let proxyProvider: INetworkProvider = new ProxyNetworkProvider("https://devnet-gateway.dharitri.com", {
         timeout: 10000,
         clientName: "test",
     });
 
     it("should create providers without configuration", async function () {
-        const apiProviderWithoutConfig = new ApiNetworkProvider("https://devnet-api.multiversx.com");
-        const proxyProviderWithoutConfig = new ProxyNetworkProvider("https://devnet-gateway.multiversx.com");
+        const apiProviderWithoutConfig = new ApiNetworkProvider("https://devnet-api.dharitri.com");
+        const proxyProviderWithoutConfig = new ProxyNetworkProvider("https://devnet-gateway.dharitri.com");
 
         const apiResponse = await apiProviderWithoutConfig.getNetworkConfig();
         const proxyResponse = await proxyProviderWithoutConfig.getNetworkConfig();
@@ -45,11 +45,11 @@ describe("test network providers on devnet: Proxy and API", function () {
     });
 
     it("should add userAgent unknown for clientName when no clientName passed", async function () {
-        const expectedApiUserAgent = "multiversx-sdk/api/unknown";
-        const expectedProxyUserAgent = "multiversx-sdk/proxy/unknown";
+        const expectedApiUserAgent = "dharitri-sdk/api/unknown";
+        const expectedProxyUserAgent = "dharitri-sdk/proxy/unknown";
 
-        let localApiProvider: any = new ApiNetworkProvider("https://devnet-api.multiversx.com", { timeout: 10000 });
-        let localProxyProvider: any = new ProxyNetworkProvider("https://devnet-gateway.multiversx.com", {
+        let localApiProvider: any = new ApiNetworkProvider("https://devnet-api.dharitri.com", { timeout: 10000 });
+        let localProxyProvider: any = new ProxyNetworkProvider("https://devnet-gateway.dharitri.com", {
             timeout: 10000,
         });
 
@@ -58,14 +58,14 @@ describe("test network providers on devnet: Proxy and API", function () {
     });
 
     it("should set userAgent with specified clientName ", async function () {
-        const expectedApiUserAgent = "multiversx-sdk/api/test";
-        const expectedProxyUserAgent = "multiversx-sdk/proxy/test";
+        const expectedApiUserAgent = "dharitri-sdk/api/test";
+        const expectedProxyUserAgent = "dharitri-sdk/proxy/test";
 
-        let localApiProvider: any = new ApiNetworkProvider("https://devnet-api.multiversx.com", {
+        let localApiProvider: any = new ApiNetworkProvider("https://devnet-api.dharitri.com", {
             timeout: 10000,
             clientName: "test",
         });
-        let localProxyProvider: any = new ProxyNetworkProvider("https://devnet-gateway.multiversx.com", {
+        let localProxyProvider: any = new ProxyNetworkProvider("https://devnet-gateway.dharitri.com", {
             timeout: 10000,
             clientName: "test",
         });
@@ -75,15 +75,15 @@ describe("test network providers on devnet: Proxy and API", function () {
     });
 
     it("should keep the set userAgent and add the sdk to it", async function () {
-        const expectedApiUserAgent = "Client-info multiversx-sdk/api/test";
-        const expectedProxyUserAgent = "Client-info multiversx-sdk/proxy/test";
+        const expectedApiUserAgent = "Client-info dharitri-sdk/api/test";
+        const expectedProxyUserAgent = "Client-info dharitri-sdk/proxy/test";
 
-        let localApiProvider: any = new ApiNetworkProvider("https://devnet-api.multiversx.com", {
+        let localApiProvider: any = new ApiNetworkProvider("https://devnet-api.dharitri.com", {
             timeout: 10000,
             headers: new AxiosHeaders({ "User-Agent": "Client-info" }),
             clientName: "test",
         });
-        let localProxyProvider: any = new ProxyNetworkProvider("https://devnet-gateway.multiversx.com", {
+        let localProxyProvider: any = new ProxyNetworkProvider("https://devnet-gateway.dharitri.com", {
             timeout: 10000,
             headers: new AxiosHeaders({ "User-Agent": "Client-info" }),
             clientName: "test",
@@ -239,8 +239,8 @@ describe("test network providers on devnet: Proxy and API", function () {
                     return {
                         nonce: 42,
                         value: "1",
-                        receiver: "erd1testnlersh4z0wsv8kjx39me4rmnvjkwu8dsaea7ukdvvc9z396qykv7z7",
-                        sender: "erd15x2panzqvfxul2lvstfrmdcl5t4frnsylfrhng8uunwdssxw4y9succ9sq",
+                        receiver: "drt1testnlersh4z0wsv8kjx39me4rmnvjkwu8dsaea7ukdvvc9z396qe2mapq",
+                        sender: "drt15x2panzqvfxul2lvstfrmdcl5t4frnsylfrhng8uunwdssxw4y9spy0xn7",
                         gasPrice: 1000000000,
                         gasLimit: 50000,
                         chainID: "D",
@@ -255,8 +255,8 @@ describe("test network providers on devnet: Proxy and API", function () {
                     return {
                         nonce: 43,
                         value: "1",
-                        receiver: "erd1testnlersh4z0wsv8kjx39me4rmnvjkwu8dsaea7ukdvvc9z396qykv7z7",
-                        sender: "erd15x2panzqvfxul2lvstfrmdcl5t4frnsylfrhng8uunwdssxw4y9succ9sq",
+                        receiver: "drt1testnlersh4z0wsv8kjx39me4rmnvjkwu8dsaea7ukdvvc9z396qe2mapq",
+                        sender: "drt15x2panzqvfxul2lvstfrmdcl5t4frnsylfrhng8uunwdssxw4y9spy0xn7",
                         gasPrice: 1000000000,
                         gasLimit: 50000,
                         chainID: "D",
@@ -416,7 +416,7 @@ describe("test network providers on devnet: Proxy and API", function () {
 
         // Query: get sum (of adder contract)
         let query = new MockQuery({
-            address: new Address("erd1qqqqqqqqqqqqqpgqfzydqmdw7m2vazsp6u5p95yxz76t2p9rd8ss0zp9ts"),
+            address: new Address("drt1x23lzn8483xs2su4fak0r0dqx6w38enpmmqf2yrkylwq7mfnvyhsmueha6"),
             func: "getSum",
         });
 
@@ -459,8 +459,8 @@ describe("test network providers on devnet: Proxy and API", function () {
                 return {
                     nonce: 7,
                     value: "0",
-                    receiver: "erd1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssycr6th",
-                    sender: "erd1zztjf9fhwvuvquzsllknq4qcmffwad6n0hjtn5dyzytr5tgz7uas0mkgrq",
+                    receiver: "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf",
+                    sender: "drt1zztjf9fhwvuvquzsllknq4qcmffwad6n0hjtn5dyzytr5tgz7uasj8ptq7",
                     gasPrice: 1000000000,
                     gasLimit: 50000,
                     chainID: "D",
@@ -474,8 +474,8 @@ describe("test network providers on devnet: Proxy and API", function () {
         const transactionNext: ITransactionNext = {
             nonce: BigInt(8),
             value: BigInt(0),
-            receiver: "erd1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssycr6th",
-            sender: "erd1zztjf9fhwvuvquzsllknq4qcmffwad6n0hjtn5dyzytr5tgz7uas0mkgrq",
+            receiver: "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf",
+            sender: "drt1zztjf9fhwvuvquzsllknq4qcmffwad6n0hjtn5dyzytr5tgz7uasj8ptq7",
             data: new Uint8Array(Buffer.from("test")),
             gasPrice: BigInt(1000000000),
             gasLimit: BigInt(80000),

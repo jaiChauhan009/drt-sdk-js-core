@@ -129,7 +129,7 @@ export class TransactionsConverter {
     private eventOnNetworkToEvent(eventOnNetwork: ITransactionEvent): TransactionEvent {
         // Before Sirius, there was no "additionalData" field on transaction logs.
         // After Sirius, the "additionalData" field includes the payload of the legacy "data" field, as well (as its first element):
-        // https://github.com/multiversx/mx-chain-go/blob/v1.6.18/process/transactionLog/process.go#L159
+        // https://github.com/dharitri/drt-chain-go/blob/v1.6.18/process/transactionLog/process.go#L159
         const legacyData = eventOnNetwork.dataPayload?.valueOf() || Buffer.from(eventOnNetwork.data || "");
         const dataItems = eventOnNetwork.additionalData?.map((data) => Buffer.from(data.valueOf())) || [];
 

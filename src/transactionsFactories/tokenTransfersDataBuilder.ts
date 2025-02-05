@@ -12,16 +12,16 @@ export class TokenTransfersDataBuilder {
         this.argsSerializer = new ArgSerializer();
     }
 
-    buildDataPartsForESDTTransfer(transfer: TokenTransfer): string[] {
+    buildDataPartsForDCDTTransfer(transfer: TokenTransfer): string[] {
         const args = this.argsSerializer.valuesToStrings([
             new TokenIdentifierValue(transfer.token.identifier),
             new BigUIntValue(transfer.amount),
         ]);
 
-        return ["ESDTTransfer", ...args];
+        return ["DCDTTransfer", ...args];
     }
 
-    buildDataPartsForSingleESDTNFTTransfer(transfer: TokenTransfer, receiver: IAddress) {
+    buildDataPartsForSingleDCDTNFTTransfer(transfer: TokenTransfer, receiver: IAddress) {
         const token = transfer.token;
         const identifier = this.tokenComputer.extractIdentifierFromExtendedIdentifier(token.identifier);
 
@@ -32,10 +32,10 @@ export class TokenTransfersDataBuilder {
             new AddressValue(receiver),
         ]);
 
-        return ["ESDTNFTTransfer", ...args];
+        return ["DCDTNFTTransfer", ...args];
     }
 
-    buildDataPartsForMultiESDTNFTTransfer(receiver: IAddress, transfers: TokenTransfer[]) {
+    buildDataPartsForMultiDCDTNFTTransfer(receiver: IAddress, transfers: TokenTransfer[]) {
         const argsTyped: TypedValue[] = [new AddressValue(receiver), new U32Value(transfers.length)];
 
         for (const transfer of transfers) {
@@ -51,6 +51,6 @@ export class TokenTransfersDataBuilder {
         }
 
         const args = this.argsSerializer.valuesToStrings(argsTyped);
-        return ["MultiESDTNFTTransfer", ...args];
+        return ["MultiDCDTNFTTransfer", ...args];
     }
 }

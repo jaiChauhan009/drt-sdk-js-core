@@ -1,7 +1,7 @@
 import {
     TransactionDecoder,
     TransactionMetadata,
-} from "@multiversx/sdk-transaction-decoder/lib/src/transaction.decoder";
+} from "@dharitri/sdk-transaction-decoder/lib/src/transaction.decoder";
 import { Address } from "../address";
 import { ErrCannotParseContractResults } from "../errors";
 import { IAddress } from "../interface";
@@ -380,8 +380,8 @@ export class ResultsParser {
         let startingIndex = 1;
 
         // Before trying to parse the hex strings, cut the unwanted parts of the data field, in case of token transfers:
-        if (data.startsWith("ESDTTransfer")) {
-            // Skip "ESDTTransfer" (1), token identifier (2), amount (3)
+        if (data.startsWith("DCDTTransfer")) {
+            // Skip "DCDTTransfer" (1), token identifier (2), amount (3)
             startingIndex = 3;
         } else {
             // TODO: Upon gathering more transaction samples, fix for other kinds of transfers, as well (future PR, as needed).
@@ -404,12 +404,12 @@ export class ResultsParser {
      */
     parseEvent(transactionEvent: ITransactionEvent, eventDefinition: { inputs: IEventInputDefinition[] }): any {
         // We skip the first topic, because, for log entries emitted by smart contracts, that's the same as the event identifier. See:
-        // https://github.com/multiversx/mx-chain-vm-go/blob/v1.5.27/vmhost/contexts/output.go#L283
+        // https://github.com/dharitri/drt-chain-vm-go/blob/v1.5.27/vmhost/contexts/output.go#L283
         const topics = transactionEvent.topics.map((topic) => Buffer.from(topic.valueOf())).slice(1);
 
         // Before Sirius, there was no "additionalData" field on transaction logs.
         // After Sirius, the "additionalData" field includes the "data" field, as well (as the first element):
-        // https://github.com/multiversx/mx-chain-go/blob/v1.6.18/process/transactionLog/process.go#L159
+        // https://github.com/dharitri/drt-chain-go/blob/v1.6.18/process/transactionLog/process.go#L159
         // Right now, the logic below is duplicated (see "TransactionsConverter"). However, "ResultsParser" will be deprecated & removed at a later time.
         const legacyData = transactionEvent.dataPayload?.valueOf() || Buffer.from([]);
         const dataItems = transactionEvent.additionalData?.map((data) => Buffer.from(data.valueOf())) || [];

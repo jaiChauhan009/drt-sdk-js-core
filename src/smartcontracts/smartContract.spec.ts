@@ -1,6 +1,6 @@
-import { TransactionStatus } from "../networkProviders";
 import { assert } from "chai";
 import { Address } from "../address";
+import { TransactionStatus } from "../networkProviders";
 import {
     loadTestWallets,
     MarkCompleted,
@@ -29,10 +29,10 @@ describe("test contract", () => {
         let owner = new Address("93ee6143cdc10ce79f15b2a6c2ad38e9b6021c72a1779051f47154fd54cfbd5e");
 
         let firstContractAddress = SmartContract.computeAddress(owner, 0);
-        assert.equal(firstContractAddress.bech32(), "erd1qqqqqqqqqqqqqpgqhdjjyq8dr7v5yq9tv6v5vt9tfvd00vg7h40q6779zn");
+        assert.equal(firstContractAddress.bech32(), "drt1qqqqqqqqqqqqqpgqhdjjyq8dr7v5yq9tv6v5vt9tfvd00vg7h40q8zfxpd");
 
         let secondContractAddress = SmartContract.computeAddress(owner, 1);
-        assert.equal(secondContractAddress.bech32(), "erd1qqqqqqqqqqqqqpgqde8eqjywyu6zlxjxuxqfg5kgtmn3setxh40qen8egy");
+        assert.equal(secondContractAddress.bech32(), "drt1qqqqqqqqqqqqqpgqde8eqjywyu6zlxjxuxqfg5kgtmn3setxh40qy0s6t6");
     });
 
     it("should deploy", async () => {
@@ -60,7 +60,7 @@ describe("test contract", () => {
 
         // Compute & set the contract address
         contract.setAddress(SmartContract.computeAddress(alice.address, 42));
-        assert.equal(contract.getAddress().bech32(), "erd1qqqqqqqqqqqqqpgq3ytm9m8dpeud35v3us20vsafp77smqghd8ss4jtm0q");
+        assert.equal(contract.getAddress().bech32(), "drt1qqqqqqqqqqqqqpgq3ytm9m8dpeud35v3us20vsafp77smqghd8ssgwucv7");
 
         // Sign the transaction
         deployTransaction.applySignature(await alice.signer.sign(deployTransaction.serializeForSigning()));
@@ -87,7 +87,7 @@ describe("test contract", () => {
         let watcher = new TransactionWatcher(provider);
 
         let contract = new SmartContract({
-            address: new Address("erd1qqqqqqqqqqqqqpgqak8zt22wl2ph4tswtyc39namqx6ysa2sd8ss4xmlj3"),
+            address: new Address("drt1qqqqqqqqqqqqqpgqak8zt22wl2ph4tswtyc39namqx6ysa2sd8ssg6vu30"),
         });
 
         provider.mockUpdateAccount(alice.address, (account) => {
@@ -157,7 +157,7 @@ describe("test contract", () => {
         let watcher = new TransactionWatcher(provider);
 
         let contract = new SmartContract();
-        contract.setAddress(Address.fromBech32("erd1qqqqqqqqqqqqqpgq3ytm9m8dpeud35v3us20vsafp77smqghd8ss4jtm0q"));
+        contract.setAddress(Address.fromBech32("drt1qqqqqqqqqqqqqpgq3ytm9m8dpeud35v3us20vsafp77smqghd8ssgwucv7"));
 
         let deployTransaction = contract.upgrade({
             code: Code.fromBuffer(Buffer.from([1, 2, 3, 4])),
@@ -198,12 +198,12 @@ describe("test contract", () => {
     });
 
     it("v13 should be stricter than v12 on optional<variadic<type>> (exotic) parameters (since NativeSerializer is used under the hood)", async () => {
-        // Related to: https://github.com/multiversx/mx-sdk-js-core/issues/435.
+        // Related to: https://github.com/dharitri/drt-sdk-js-core/issues/435.
         // In v12, contract.call() only supported TypedValue[] as contract call arguments.
         // In v13, NativeSerializer is used under the hood, which allows one to mix typed values with native values.
         // However, this comes with additional rules regarding optional<variadic<?>> parameters.
         // These parameters are exotic and, generally speaking, can be avoided in contracts:
-        // https://docs.multiversx.com/developers/data/multi-values/
+        // https://docs.dharitri.com/developers/data/multi-values/
 
         const abi = AbiRegistry.create({
             endpoints: [
@@ -218,8 +218,8 @@ describe("test contract", () => {
             ],
         });
 
-        const callerAddress = Address.fromBech32("erd1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssycr6th");
-        const contractAddress = Address.fromBech32("erd1qqqqqqqqqqqqqpgqaxa53w6uk43n6dhyt2la6cd5lyv32qn4396qfsqlnk");
+        const callerAddress = Address.fromBech32("drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf");
+        const contractAddress = Address.fromBech32("drt1qqqqqqqqqqqqqpgqaxa53w6uk43n6dhyt2la6cd5lyv32qn4396q5vhusg");
 
         const contract = new SmartContract({
             abi,
@@ -287,8 +287,8 @@ describe("test contract", () => {
             ],
         });
 
-        const callerAddress = Address.fromBech32("erd1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssycr6th");
-        const contractAddress = Address.fromBech32("erd1qqqqqqqqqqqqqpgqaxa53w6uk43n6dhyt2la6cd5lyv32qn4396qfsqlnk");
+        const callerAddress = Address.fromBech32("drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf");
+        const contractAddress = Address.fromBech32("drt1qqqqqqqqqqqqqpgqaxa53w6uk43n6dhyt2la6cd5lyv32qn4396q5vhusg");
 
         const contract = new SmartContract({
             abi,

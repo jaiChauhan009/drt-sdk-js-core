@@ -2,7 +2,7 @@ import { ErrContractQuery, ErrNetworkProvider } from "../errors";
 import { getAxios } from "../utils";
 import { AccountOnNetwork, GuardianData } from "./accounts";
 import { defaultAxiosConfig } from "./config";
-import { BaseUserAgent, EsdtContractAddress } from "./constants";
+import { BaseUserAgent, DcdtContractAddress } from "./constants";
 import { ContractQueryRequest } from "./contractQueryRequest";
 import { ContractQueryResponse } from "./contractQueryResponse";
 import { IAddress, IContractQuery, INetworkProvider, IPagination, ITransaction, ITransactionNext } from "./interface";
@@ -45,13 +45,13 @@ export class ProxyNetworkProvider implements INetworkProvider {
 
     async getNetworkStakeStatistics(): Promise<NetworkStake> {
         // TODO: Implement wrt.:
-        // https://github.com/multiversx/mx-api-service/blob/main/src/endpoints/stake/stake.service.ts
+        // https://github.com/dharitri/drt-api-service/blob/main/src/endpoints/stake/stake.service.ts
         throw new Error("Method not implemented.");
     }
 
     async getNetworkGeneralStatistics(): Promise<NetworkGeneralStatistics> {
         // TODO: Implement wrt. (full implementation may not be possible):
-        // https://github.com/multiversx/mx-api-service/blob/main/src/endpoints/network/network.service.ts
+        // https://github.com/dharitri/drt-api-service/blob/main/src/endpoints/network/network.service.ts
         throw new Error("Method not implemented.");
     }
 
@@ -71,9 +71,9 @@ export class ProxyNetworkProvider implements INetworkProvider {
         address: IAddress,
         _pagination?: IPagination,
     ): Promise<FungibleTokenOfAccountOnNetwork[]> {
-        const url = `address/${address.bech32()}/esdt`;
+        const url = `address/${address.bech32()}/dcdt`;
         const response = await this.doGetGeneric(url);
-        const responseItems: any[] = Object.values(response.esdts);
+        const responseItems: any[] = Object.values(response.dcdts);
         // Skip NFTs / SFTs.
         const responseItemsFiltered = responseItems.filter((item) => !item.nonce);
         const tokens = responseItemsFiltered.map((item) => FungibleTokenOfAccountOnNetwork.fromHttpResponse(item));
@@ -87,9 +87,9 @@ export class ProxyNetworkProvider implements INetworkProvider {
         address: IAddress,
         _pagination?: IPagination,
     ): Promise<NonFungibleTokenOfAccountOnNetwork[]> {
-        const url = `address/${address.bech32()}/esdt`;
+        const url = `address/${address.bech32()}/dcdt`;
         const response = await this.doGetGeneric(url);
-        const responseItems: any[] = Object.values(response.esdts);
+        const responseItems: any[] = Object.values(response.dcdts);
         // Skip fungible tokens.
         const responseItemsFiltered = responseItems.filter((item) => item.nonce >= 0);
         const tokens = responseItemsFiltered.map((item) =>
@@ -105,7 +105,7 @@ export class ProxyNetworkProvider implements INetworkProvider {
         address: IAddress,
         tokenIdentifier: string,
     ): Promise<FungibleTokenOfAccountOnNetwork> {
-        const response = await this.doGetGeneric(`address/${address.bech32()}/esdt/${tokenIdentifier}`);
+        const response = await this.doGetGeneric(`address/${address.bech32()}/dcdt/${tokenIdentifier}`);
         const tokenData = FungibleTokenOfAccountOnNetwork.fromHttpResponse(response.tokenData);
         return tokenData;
     }
@@ -182,7 +182,7 @@ export class ProxyNetworkProvider implements INetworkProvider {
         const encodedIdentifier = Buffer.from(identifier).toString("hex");
 
         const queryResponse = await this.queryContract({
-            address: EsdtContractAddress,
+            address: DcdtContractAddress,
             func: "getTokenProperties",
             getEncodedArguments: () => [encodedIdentifier],
         });

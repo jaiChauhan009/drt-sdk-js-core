@@ -1,14 +1,14 @@
 import { assert } from "chai";
 import { Address } from "../address";
-import { ContractFunction } from "./function";
 import { Code } from "./code";
 import { CodeMetadata } from "./codeMetadata";
-import { AddressValue, U32Value } from "./typesystem";
+import { ContractFunction } from "./function";
 import {
     ContractCallPayloadBuilder,
     ContractDeployPayloadBuilder,
     ContractUpgradePayloadBuilder,
 } from "./transactionPayloadBuilders";
+import { AddressValue, U32Value } from "./typesystem";
 
 describe("test contract payload builders", () => {
     it("should prepare deploy correctly", async () => {
@@ -32,7 +32,8 @@ describe("test contract payload builders", () => {
     });
 
     it("should prepare call correctly", async () => {
-        let alice = new Address("erd1l453hd0gt5gzdp7czpuall8ggt2dcv5zwmfdf3sd3lguxseux2fsmsgldz");
+        let alice = new Address("drt1l453hd0gt5gzdp7czpuall8ggt2dcv5zwmfdf3sd3lguxseux2fsxvluwu");
+                                
         let payload = new ContractCallPayloadBuilder()
             .setFunction(new ContractFunction("transferToken"))
             .addArg(new AddressValue(alice))

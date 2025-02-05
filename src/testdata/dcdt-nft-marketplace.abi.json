@@ -8,15 +8,15 @@
             "short": "rustc 1.59.0-nightly (399ba6bb3 2022-01-03)"
         },
         "contractCrate": {
-            "name": "esdt-nft-marketplace",
+            "name": "dcdt-nft-marketplace",
             "version": "0.0.0"
         },
         "framework": {
-            "name": "elrond-wasm",
+            "name": "numbat-wasm",
             "version": "0.25.0"
         }
     },
-    "name": "EsdtNftMarketplace",
+    "name": "DcdtNftMarketplace",
     "constructor": {
         "inputs": [
             {
@@ -408,7 +408,7 @@
             "fields": [
                 {
                     "name": "auctioned_token",
-                    "type": "EsdtToken"
+                    "type": "DcdtToken"
                 },
                 {
                     "name": "nr_auctioned_tokens",
@@ -420,7 +420,7 @@
                 },
                 {
                     "name": "payment_token",
-                    "type": "EsdtToken"
+                    "type": "DcdtToken"
                 },
                 {
                     "name": "min_bid",
@@ -481,7 +481,7 @@
                 }
             ]
         },
-        "EsdtToken": {
+        "DcdtToken": {
             "type": "struct",
             "fields": [
                 {

@@ -46,7 +46,7 @@ export class Type {
     getFullyQualifiedName(): string {
         return this.isGenericType() || this.hasMetadata()
             ? this.getFullNameForGeneric()
-            : `multiversx:types:${this.getName()}`;
+            : `dharitri:types:${this.getName()}`;
     }
 
     private getFullNameForGeneric(): string {
@@ -56,7 +56,7 @@ export class Type {
                   .map((type) => type.getFullyQualifiedName())
                   .join(", ")}`
             : "";
-        let baseName = `multiversx:types:${this.getName()}`;
+        let baseName = `dharitri:types:${this.getName()}`;
         if (hasTypeParameters) {
             baseName = `${baseName}<${joinedTypeParameters}>`;
         }
@@ -97,7 +97,7 @@ export class Type {
     }
 
     /**
-     * Generates type expressions similar to mx-sdk-rs.
+     * Generates type expressions similar to drt-sdk-rs.
      */
     toString() {
         let typeParameters: string = this.getTypeParameters()

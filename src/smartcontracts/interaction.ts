@@ -134,17 +134,17 @@ export class Interaction {
         return this;
     }
 
-    withSingleESDTTransfer(transfer: ITokenTransfer): Interaction {
+    withSingleDCDTTransfer(transfer: ITokenTransfer): Interaction {
         this.tokenTransfers = [transfer].map((transfer) => new TokenTransfer(transfer));
         return this;
     }
 
-    withSingleESDTNFTTransfer(transfer: ITokenTransfer): Interaction {
+    withSingleDCDTNFTTransfer(transfer: ITokenTransfer): Interaction {
         this.tokenTransfers = [transfer].map((transfer) => new TokenTransfer(transfer));
         return this;
     }
 
-    withMultiESDTNFTTransfer(transfers: ITokenTransfer[]): Interaction {
+    withMultiDCDTNFTTransfer(transfers: ITokenTransfer[]): Interaction {
         this.tokenTransfers = transfers.map((transfer) => new TokenTransfer(transfer));
         return this;
     }

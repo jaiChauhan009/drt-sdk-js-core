@@ -12,7 +12,7 @@ describe("test signable message", () => {
             address: alice.address,
             message: Buffer.from("test message", "ascii"),
             signature: Buffer.from("a".repeat(128), "hex"),
-            signer: "ElrondWallet",
+            signer: "NumbatWallet",
         });
 
         const jsonSM = sm.toJSON();
@@ -21,12 +21,12 @@ describe("test signable message", () => {
         assert.deepEqual(
             jsonSM,
             {
-                address: "erd1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssycr6th",
+                address: "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf",
                 message: "0x74657374206d657373616765",
                 signature:
                     "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                 version: 1,
-                signer: "ElrondWallet",
+                signer: "NumbatWallet",
             },
             "invalid signable message returned",
         );

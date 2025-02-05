@@ -547,7 +547,7 @@ describe("test on local testnet", function () {
         let transactionDeploy = await prepareDeployment({
             contract: contract,
             deployer: alice,
-            codePath: "src/testdata/lottery-esdt.wasm",
+            codePath: "src/testdata/lottery-dcdt.wasm",
             gasLimit: 50000000,
             initArguments: [],
             chainID: network.ChainID,
@@ -559,7 +559,7 @@ describe("test on local testnet", function () {
             gasLimit: 10000000,
             args: [
                 BytesValue.fromUTF8("lucky"),
-                new TokenIdentifierValue("EGLD"),
+                new TokenIdentifierValue("REWA"),
                 new BigUIntValue(1),
                 OptionValue.newMissing(),
                 OptionValue.newMissing(),
@@ -620,7 +620,7 @@ describe("test on local testnet", function () {
         const config = new TransactionsFactoryConfig({ chainID: network.ChainID });
         const factory = new SmartContractTransactionsFactory({ config: config });
 
-        const bytecode = await promises.readFile("src/testdata/lottery-esdt.wasm");
+        const bytecode = await promises.readFile("src/testdata/lottery-dcdt.wasm");
 
         const deployTransaction = factory.createTransactionForDeploy({
             sender: alice.address,
@@ -644,7 +644,7 @@ describe("test on local testnet", function () {
             gasLimit: 10000000n,
             arguments: [
                 BytesValue.fromUTF8("lucky"),
-                new TokenIdentifierValue("EGLD"),
+                new TokenIdentifierValue("REWA"),
                 new BigUIntValue(1),
                 OptionValue.newMissing(),
                 OptionValue.newMissing(),

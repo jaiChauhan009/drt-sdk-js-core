@@ -1,7 +1,7 @@
 import { Address } from "./address";
+import { MESSAGE_PREFIX } from "./constants";
 import { ISignature } from "./interface";
 import { interpretSignatureAsBuffer } from "./signature";
-import { MESSAGE_PREFIX } from "./constants";
 const createKeccakHash = require("keccak");
 
 /**
@@ -36,7 +36,7 @@ export class SignableMessage {
         this.message = Buffer.from([]);
         this.signature = Buffer.from([]);
         this.version = 1;
-        this.signer = "ErdJS";
+        this.signer = "DrtJS";
         this.address = Address.empty();
 
         Object.assign(this, init);

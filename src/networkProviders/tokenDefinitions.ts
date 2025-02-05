@@ -44,7 +44,7 @@ export class DefinitionOfFungibleTokenOnNetwork {
 
     /**
      * The implementation has been moved here from the following location:
-     * https://github.com/multiversx/mx-sdk-js-core/blob/release/v9/src/token.ts
+     * https://github.com/dharitri/drt-sdk-js-core/blob/release/v9/src/token.ts
      */
     static fromResponseOfGetTokenProperties(identifier: string, data: Buffer[]): DefinitionOfFungibleTokenOnNetwork {
         let result = new DefinitionOfFungibleTokenOnNetwork();
@@ -108,7 +108,7 @@ export class DefinitionOfTokenCollectionOnNetwork {
 
     /**
      * The implementation has been moved here from the following location:
-     * https://github.com/multiversx/mx-sdk-js-core/blob/release/v9/src/token.ts
+     * https://github.com/dharitri/drt-sdk-js-core/blob/release/v9/src/token.ts
      */
     static fromResponseOfGetTokenProperties(collection: string, data: Buffer[]): DefinitionOfTokenCollectionOnNetwork {
         let result = new DefinitionOfTokenCollectionOnNetwork();

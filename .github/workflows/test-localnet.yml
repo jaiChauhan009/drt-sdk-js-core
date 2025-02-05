@@ -1,4 +1,4 @@
-name: MultiversX Integration Tests
+name: DharitrI Integration Tests
 
 on:
   push:
@@ -30,18 +30,18 @@ jobs:
           echo "$HOME/.local/bin" >> $GITHUB_PATH
         shell: bash
 
-      # Step 4: Install mxpy (MultiversX Python SDK)
-      - name: Install mxpy (MultiversX SDK)
+      # Step 4: Install drtpy (DharitrI Python SDK)
+      - name: Install drtpy (DharitrI SDK)
         run: |
-          pipx install multiversx-sdk-cli --force
+          pipx install dharitri-sdk-cli --force
 
-      # Step 5: Set up MultiversX localnet using mxpy
-      - name: Set up MultiversX localnet
+      # Step 5: Set up DharitrI localnet using drtpy
+      - name: Set up DharitrI localnet
         run: |
-          # Start the local testnet with mxpy
+          # Start the local testnet with drtpy
           mkdir -p ~/localnet && cd ~/localnet
-          mxpy localnet setup --configfile=${GITHUB_WORKSPACE}/localnet.toml
-          nohup mxpy localnet start --configfile=${GITHUB_WORKSPACE}/localnet.toml > localnet.log 2>&1 & echo $! > localnet.pid
+          drtpy localnet setup --configfile=${GITHUB_WORKSPACE}/localnet.toml
+          nohup drtpy localnet start --configfile=${GITHUB_WORKSPACE}/localnet.toml > localnet.log 2>&1 & echo $! > localnet.pid
           sleep 120 # Allow time for the testnet to fully start
 
       # Step 6: Install Node.js and dependencies
@@ -59,7 +59,7 @@ jobs:
           npm run tests-localnet
 
       # Step 8: Stop the testnet using the stored PID
-      - name: Stop MultiversX local testnet
+      - name: Stop DharitrI local testnet
         if: success() || failure()
         run: |
           kill $(cat localnet.pid) || echo "Testnet already stopped"

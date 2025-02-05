@@ -17,8 +17,8 @@ export class TransactionEventsParser {
 
         // By default, we consider that the first topic is the event identifier.
         // This is true for log entries emitted by smart contracts:
-        // https://github.com/multiversx/mx-chain-vm-go/blob/v1.5.27/vmhost/contexts/output.go#L270
-        // https://github.com/multiversx/mx-chain-vm-go/blob/v1.5.27/vmhost/contexts/output.go#L283
+        // https://github.com/dharitri/drt-chain-vm-go/blob/v1.5.27/vmhost/contexts/output.go#L270
+        // https://github.com/dharitri/drt-chain-vm-go/blob/v1.5.27/vmhost/contexts/output.go#L283
         this.firstTopicIsIdentifier = options.firstTopicIsIdentifier ?? true;
     }
 

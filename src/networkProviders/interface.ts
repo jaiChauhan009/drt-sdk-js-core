@@ -103,7 +103,7 @@ export interface INetworkProvider {
     getDefinitionOfFungibleToken(tokenIdentifier: string): Promise<DefinitionOfFungibleTokenOnNetwork>;
 
     /**
-     * Fetches the definition of a SFT (including Meta ESDT) or NFT.
+     * Fetches the definition of a SFT (including Meta DCDT) or NFT.
      */
     getDefinitionOfTokenCollection(collection: string): Promise<DefinitionOfTokenCollectionOnNetwork>;
 

@@ -1,3 +1,7 @@
+
+
+
+
 import * as fs from "fs";
 import * as path from "path";
 import { Account } from "../account";
@@ -25,6 +29,28 @@ export async function syncTestWallets(wallets: Record<string, TestWallet>, provi
     await Promise.all(Object.values(wallets).map(async (wallet) => wallet.sync(provider)));
 }
 
+// export async function loadTestWallets(): Promise<Record<string, TestWallet>> {
+//     let walletNames = [
+//         "alice",
+//         "bob",
+//         "carol",
+//         "dan",
+//         "eve",
+//         "frank",
+//         "grace",
+//         "heidi",
+//         "ivan",
+//         "judy",
+//         "mallory",
+//         "mike",
+//     ];
+//     let wallets = await Promise.all(walletNames.map(async (name) => await loadTestWallet(name)));
+//     let walletMap: Record<string, TestWallet> = {};
+//     for (let i in walletNames) {
+//         walletMap[walletNames[i]] = wallets[i];
+//     }
+//     return walletMap;
+// }
 export async function loadTestWallets(): Promise<Record<string, TestWallet>> {
     let walletNames = [
         "alice",
@@ -42,11 +68,15 @@ export async function loadTestWallets(): Promise<Record<string, TestWallet>> {
     ];
     let wallets = await Promise.all(walletNames.map(async (name) => await loadTestWallet(name)));
     let walletMap: Record<string, TestWallet> = {};
-    for (let i in walletNames) {
+
+    // Change the for-in loop to a standard for loop
+    for (let i = 0; i < walletNames.length; i++) {
         walletMap[walletNames[i]] = wallets[i];
     }
+
     return walletMap;
 }
+
 
 export async function loadTestKeystore(file: string): Promise<any> {
     const testdataPath = path.resolve(__dirname, "..", "testdata/testwallets");
@@ -63,13 +93,30 @@ export async function loadPassword(): Promise<string> {
     return await readTestWalletFileContents("password.txt");
 }
 
+// export async function loadTestWallet(name: string): Promise<TestWallet> {
+//     const jsonContents = JSON.parse(await readTestWalletFileContents(name + ".json"));
+//     const pemContents = await readTestWalletFileContents(name + ".pem");
+//     const secretKey = UserSecretKey.fromPem(pemContents);
+//     const publicKey = secretKey.generatePublicKey().valueOf();
+//     return new TestWallet(new Address(publicKey), secretKey.hex(), jsonContents, pemContents);
+// }
 export async function loadTestWallet(name: string): Promise<TestWallet> {
-    const jsonContents = JSON.parse(await readTestWalletFileContents(name + ".json"));
-    const pemContents = await readTestWalletFileContents(name + ".pem");
-    const secretKey = UserSecretKey.fromPem(pemContents);
-    const publicKey = secretKey.generatePublicKey().valueOf();
-    return new TestWallet(new Address(publicKey), secretKey.hex(), jsonContents, pemContents);
+    const filePath = `./testdata/${name}.json`; // or wherever your test data is
+    const data = await fs.promises.readFile(filePath, 'utf-8');
+    
+    // Log the data here before parsing
+    console.log('Data being parsed:', data);
+
+    try {
+        let parsedData = JSON.parse(data);  // This is where the error happens
+        return parsedData;
+    } catch (error) {
+        console.error('Error parsing JSON for wallet:', name);
+        console.error(error);
+        throw error;  // Re-throw the error after logging
+    }
 }
+
 
 async function readTestWalletFileContents(name: string): Promise<string> {
     let filePath = path.join("src", "testdata", "testwallets", name);

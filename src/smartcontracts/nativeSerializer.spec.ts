@@ -52,8 +52,8 @@ describe("test native serializer", () => {
 
         const p0 = 42;
         const p1 = [
-            new Address("erd1dc3yzxxeq69wvf583gw0h67td226gu2ahpk3k50qdgzzym8npltq7ndgha"),
-            new Address("erd1r69gk66fmedhhcg24g2c5kn2f2a5k4kvpr6jfw67dn2lyydd8cfswy6ede"),
+            new Address("drt1dc3yzxxeq69wvf583gw0h67td226gu2ahpk3k50qdgzzym8npltqr06t5r"),
+            new Address("drt1r69gk66fmedhhcg24g2c5kn2f2a5k4kvpr6jfw67dn2lyydd8cfsncd6w8"),
         ];
         const p2 = Buffer.from("abba", "hex");
         const p3 = Number(0xabba);
@@ -208,7 +208,7 @@ describe("test native serializer", () => {
         let endpoint = new EndpointDefinition("foo", inputParameters, [], endpointModifiers);
 
         let a = 42;
-        let b = [new Address("erd1dc3yzxxeq69wvf583gw0h67td226gu2ahpk3k50qdgzzym8npltq7ndgha")];
+        let b = [new Address("drt1dc3yzxxeq69wvf583gw0h67td226gu2ahpk3k50qdgzzym8npltqr06t5r")];
         let c = BytesValue.fromUTF8("test");
 
         let typedValues = NativeSerializer.nativeToTypedValues([a, b, c], endpoint);
@@ -287,7 +287,7 @@ describe("test native serializer", () => {
 
         const compositeType = new CompositeType(new AddressType(), new U64Type());
         const optionalCompositeType = new OptionalType(compositeType);
-        const addressBech32 = "erd1dc3yzxxeq69wvf583gw0h67td226gu2ahpk3k50qdgzzym8npltq7ndgha";
+        const addressBech32 = "drt1dc3yzxxeq69wvf583gw0h67td226gu2ahpk3k50qdgzzym8npltqr06t5r";
         const address = Address.fromBech32(addressBech32);
         const compositeValue = CompositeValue.fromItems(new AddressValue(address), new U64Value(42));
         const optionalCompositeValue = new OptionalValue(optionalCompositeType, compositeValue);
@@ -583,7 +583,7 @@ describe("test native serializer", () => {
         // Enum with a single field
         const p2 = {
             name: "Something",
-            fields: { 0: "erd1dc3yzxxeq69wvf583gw0h67td226gu2ahpk3k50qdgzzym8npltq7ndgha" },
+            fields: { 0: "drt1dc3yzxxeq69wvf583gw0h67td226gu2ahpk3k50qdgzzym8npltqr06t5r" },
         };
         // Enum with multiple fields
         const p3 = { name: "Else", fields: { x: 42, y: 43 } };
@@ -597,7 +597,7 @@ describe("test native serializer", () => {
         assert.deepEqual(typedValues[2].getType(), enumType);
         assert.deepEqual(typedValues[2].valueOf(), {
             name: "Something",
-            fields: [new Address("erd1dc3yzxxeq69wvf583gw0h67td226gu2ahpk3k50qdgzzym8npltq7ndgha")],
+            fields: [new Address("drt1dc3yzxxeq69wvf583gw0h67td226gu2ahpk3k50qdgzzym8npltqr06t5r")],
         });
         assert.deepEqual(typedValues[3].getType(), enumType);
         assert.deepEqual(typedValues[3].valueOf(), { name: "Else", fields: [new BigNumber(42), new BigNumber(43)] });

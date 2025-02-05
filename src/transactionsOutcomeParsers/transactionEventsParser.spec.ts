@@ -1,3 +1,7 @@
+import BigNumber from "bignumber.js";
+import { assert } from "chai";
+import { Address } from "../address";
+import { TransactionsConverter } from "../converters/transactionsConverter";
 import {
     ContractResultItem,
     ContractResults,
@@ -7,10 +11,6 @@ import {
     TransactionLogsOnNetwork,
     TransactionOnNetwork,
 } from "../networkProviders";
-import BigNumber from "bignumber.js";
-import { assert } from "chai";
-import { Address } from "../address";
-import { TransactionsConverter } from "../converters/transactionsConverter";
 import { AbiRegistry } from "../smartcontracts";
 import { loadAbiRegistry } from "../testutils";
 import { TransactionEvent, findEventsByFirstTopic } from "./resources";
@@ -19,7 +19,7 @@ import { TransactionEventsParser } from "./transactionEventsParser";
 describe("test transaction events parser", () => {
     it("parses events (minimalistic)", async function () {
         const parser = new TransactionEventsParser({
-            abi: await loadAbiRegistry("src/testdata/esdt-safe.abi.json"),
+            abi: await loadAbiRegistry("src/testdata/dcdt-safe.abi.json"),
         });
 
         const values = parser.parseEvents({
@@ -39,9 +39,9 @@ describe("test transaction events parser", () => {
         ]);
     });
 
-    it("parses events (esdt-safe, deposit)", async function () {
+    it("parses events (dcdt-safe, deposit)", async function () {
         const parser = new TransactionEventsParser({
-            abi: await loadAbiRegistry("src/testdata/esdt-safe.abi.json"),
+            abi: await loadAbiRegistry("src/testdata/dcdt-safe.abi.json"),
         });
 
         const transactionsConverter = new TransactionsConverter();
@@ -74,7 +74,7 @@ describe("test transaction events parser", () => {
 
         assert.deepEqual(parsed, [
             {
-                dest_address: Address.fromBech32("erd1wfkv9495dhtt6a9yepxsyu2mlpw2ua333j4cr0qfulpxr4q5nfnshgyqun"),
+                dest_address: Address.fromBech32("drt1wfkv9495dhtt6a9yepxsyu2mlpw2ua333j4cr0qfulpxr4q5nfns25nrld"),
                 tokens: [
                     {
                         token_identifier: "WEGLD-01e49d",
@@ -132,20 +132,20 @@ describe("test transaction events parser", () => {
                     action_id: new BigNumber("1"),
                     group_id: new BigNumber("0"),
                     action_data: {
-                        name: "SendTransferExecuteEgld",
+                        name: "SendTransferExecuteRewa",
                         fields: [
                             {
                                 to: Address.fromBech32(
-                                    "erd1qqqqqqqqqqqqqpgq6qr0w0zzyysklfneh32eqp2cf383zc89d8sstnkl60",
+                                    "drt1qqqqqqqqqqqqqpgq6qr0w0zzyysklfneh32eqp2cf383zc89d8ssk0pue3",
                                 ),
-                                egld_amount: new BigNumber("0"),
+                                rewa_amount: new BigNumber("0"),
                                 opt_gas_limit: null,
                                 endpoint_name: Buffer.from("add"),
                                 arguments: [Buffer.from("07", "hex")],
                             },
                         ],
                     },
-                    signers: [Address.fromBech32("erd1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssycr6th")],
+                    signers: [Address.fromBech32("drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf")],
                 },
             },
         ]);
@@ -153,7 +153,7 @@ describe("test transaction events parser", () => {
 
     it("cannot parse events, when definition is missing", async function () {
         const parser = new TransactionEventsParser({
-            abi: await loadAbiRegistry("src/testdata/esdt-safe.abi.json"),
+            abi: await loadAbiRegistry("src/testdata/dcdt-safe.abi.json"),
         });
 
         assert.throws(() => {

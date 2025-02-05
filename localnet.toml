@@ -26,16 +26,16 @@ port_first_observer_rest_api = 10100
 port_first_validator = 21500
 port_first_validator_rest_api = 10200
 
-[software.mx_chain_go]
+[software.drt_chain_go]
 resolution = "remote"
-archive_url = "https://github.com/multiversx/mx-chain-go/archive/refs/heads/master.zip"
-archive_download_folder = "~/multiversx-sdk/localnet_software_remote/downloaded/mx-chain-go"
-archive_extraction_folder = "~/multiversx-sdk/localnet_software_remote/extracted/mx-chain-go"
-local_path = "~/multiversx-sdk/localnet_software_local/mx-chain-go"
+archive_url = "https://github.com/dharitri/drt-chain-go/archive/refs/heads/master.zip"
+archive_download_folder = "~/dharitri-sdk/localnet_software_remote/downloaded/drt-chain-go"
+archive_extraction_folder = "~/dharitri-sdk/localnet_software_remote/extracted/drt-chain-go"
+local_path = "~/dharitri-sdk/localnet_software_local/drt-chain-go"
 
-[software.mx_chain_proxy_go]
+[software.drt_chain_proxy_go]
 resolution = "remote"
-archive_url = "https://github.com/multiversx/mx-chain-proxy-go/archive/refs/heads/master.zip"
-archive_download_folder = "~/multiversx-sdk/localnet_software_remote/downloaded/mx-chain-proxy-go"
-archive_extraction_folder = "~/multiversx-sdk/localnet_software_remote/extracted/mx-chain-proxy-go"
-local_path = "~/multiversx-sdk/localnet_software_local/mx-chain-proxy-go"
+archive_url = "https://github.com/dharitri/drt-chain-proxy-go/archive/refs/heads/master.zip"
+archive_download_folder = "~/dharitri-sdk/localnet_software_remote/downloaded/drt-chain-proxy-go"
+archive_extraction_folder = "~/dharitri-sdk/localnet_software_remote/extracted/drt-chain-proxy-go"
+local_path = "~/dharitri-sdk/localnet_software_local/drt-chain-proxy-go"

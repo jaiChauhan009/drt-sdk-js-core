@@ -60,7 +60,7 @@ describe("serialize transactions", () => {
     it("with data, with value", async () => {
         let transaction = new Transaction({
             nonce: 91,
-            value: TokenTransfer.egldFromAmount(10),
+            value: TokenTransfer.rewaFromAmount(10),
             sender: wallets.alice.address,
             receiver: wallets.bob.address,
             gasLimit: 100000,
@@ -128,8 +128,8 @@ describe("serialize transactions", () => {
         const transaction = new Transaction({
             nonce: 204,
             value: "1000000000000000000",
-            sender: Address.fromBech32("erd1k2s324ww2g0yj38qn2ch2jwctdy8mnfxep94q9arncc6xecg3xaq6mjse8"),
-            receiver: Address.fromBech32("erd1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssycr6th"),
+            sender: Address.fromBech32("drt1k2s324ww2g0yj38qn2ch2jwctdy8mnfxep94q9arncc6xecg3xaq889n6e"),
+            receiver: Address.fromBech32("drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf"),
             senderUsername: "carol",
             receiverUsername: "alice",
             gasLimit: 50000,

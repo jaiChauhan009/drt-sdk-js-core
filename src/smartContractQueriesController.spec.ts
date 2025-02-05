@@ -1,7 +1,7 @@
-import { ContractQueryResponse } from "./networkProviders";
 import BigNumber from "bignumber.js";
 import { assert } from "chai";
 import { QueryRunnerAdapter } from "./adapters/queryRunnerAdapter";
+import { ContractQueryResponse } from "./networkProviders";
 import { SmartContractQueriesController } from "./smartContractQueriesController";
 import { SmartContractQueryResponse } from "./smartContractQuery";
 import { AbiRegistry, BigUIntValue, BooleanValue, BytesValue, Tuple, U16Value, U64Value } from "./smartcontracts";
@@ -17,12 +17,12 @@ describe("test smart contract queries controller", () => {
             });
 
             const query = controller.createQuery({
-                contract: "erd1foo",
+                contract: "drt1foo",
                 function: "bar",
                 arguments: [bigIntToBuffer(42), Buffer.from("abba")],
             });
 
-            assert.equal(query.contract, "erd1foo");
+            assert.equal(query.contract, "drt1foo");
             assert.equal(query.function, "bar");
             assert.deepEqual(query.arguments, [bigIntToBuffer(42), Buffer.from("abba")]);
         });
@@ -34,12 +34,12 @@ describe("test smart contract queries controller", () => {
             });
 
             const query = controller.createQuery({
-                contract: "erd1foo",
+                contract: "drt1foo",
                 function: "bar",
                 arguments: [new BigUIntValue(42), BytesValue.fromUTF8("abba")],
             });
 
-            assert.equal(query.contract, "erd1foo");
+            assert.equal(query.contract, "drt1foo");
             assert.equal(query.function, "bar");
             assert.deepEqual(query.arguments, [bigIntToBuffer(42), Buffer.from("abba")]);
         });
@@ -52,7 +52,7 @@ describe("test smart contract queries controller", () => {
 
             assert.throws(() => {
                 controller.createQuery({
-                    contract: "erd1foo",
+                    contract: "drt1foo",
                     function: "bar",
                     arguments: [42, "abba"],
                 });
@@ -64,17 +64,17 @@ describe("test smart contract queries controller", () => {
                 networkProvider: new MockNetworkProvider(),
             });
             const controller = new SmartContractQueriesController({
-                abi: await loadAbiRegistry("src/testdata/lottery-esdt.abi.json"),
+                abi: await loadAbiRegistry("src/testdata/lottery-dcdt.abi.json"),
                 queryRunner: adapter,
             });
 
             const query = controller.createQuery({
-                contract: "erd1foo",
+                contract: "drt1foo",
                 function: "getLotteryInfo",
                 arguments: ["myLottery"],
             });
 
-            assert.equal(query.contract, "erd1foo");
+            assert.equal(query.contract, "drt1foo");
             assert.equal(query.function, "getLotteryInfo");
             assert.deepEqual(query.arguments, [Buffer.from("myLottery")]);
         });
@@ -84,17 +84,17 @@ describe("test smart contract queries controller", () => {
                 networkProvider: new MockNetworkProvider(),
             });
             const controller = new SmartContractQueriesController({
-                abi: await loadAbiRegistry("src/testdata/lottery-esdt.abi.json"),
+                abi: await loadAbiRegistry("src/testdata/lottery-dcdt.abi.json"),
                 queryRunner: adapter,
             });
 
             const query = controller.createQuery({
-                contract: "erd1foo",
+                contract: "drt1foo",
                 function: "getLotteryInfo",
                 arguments: [BytesValue.fromUTF8("myLottery")],
             });
 
-            assert.equal(query.contract, "erd1foo");
+            assert.equal(query.contract, "drt1foo");
             assert.equal(query.function, "getLotteryInfo");
             assert.deepEqual(query.arguments, [Buffer.from("myLottery")]);
         });
@@ -132,7 +132,7 @@ describe("test smart contract queries controller", () => {
             });
 
             const query = controller.createQuery({
-                contract: "erd1foo",
+                contract: "drt1foo",
                 function: "bar",
                 arguments: [
                     // Typed value
@@ -148,7 +148,7 @@ describe("test smart contract queries controller", () => {
                 ],
             });
 
-            assert.equal(query.contract, "erd1foo");
+            assert.equal(query.contract, "drt1foo");
             assert.equal(query.function, "bar");
             assert.deepEqual(query.arguments, [
                 Buffer.from("002a01", "hex"),
@@ -178,7 +178,7 @@ describe("test smart contract queries controller", () => {
             );
 
             const query = {
-                contract: "erd1qqqqqqqqqqqqqpgqvc7gdl0p4s97guh498wgz75k8sav6sjfjlwqh679jy",
+                contract: "drt1qqqqqqqqqqqqqpgqvc7gdl0p4s97guh498wgz75k8sav6sjfjlwq2xfx36",
                 function: "bar",
                 arguments: [],
             };
@@ -216,7 +216,7 @@ describe("test smart contract queries controller", () => {
                 networkProvider: new MockNetworkProvider(),
             });
             const controller = new SmartContractQueriesController({
-                abi: await loadAbiRegistry("src/testdata/lottery-esdt.abi.json"),
+                abi: await loadAbiRegistry("src/testdata/lottery-dcdt.abi.json"),
                 queryRunner: adapter,
             });
 

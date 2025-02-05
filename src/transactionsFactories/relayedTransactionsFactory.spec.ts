@@ -18,7 +18,7 @@ describe("test relayed transactions factory", function () {
     it("should throw exception when creating relayed v1 transaction with invalid inner transaction", async function () {
         let innerTransaction = new Transaction({
             sender: alice.address.bech32(),
-            receiver: "erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqzllls8a5w6u",
+            receiver: "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqzllls6prdez",
             gasLimit: 10000000n,
             data: Buffer.from("getContractConfig"),
             chainID: config.chainID,
@@ -41,7 +41,7 @@ describe("test relayed transactions factory", function () {
     it("should create relayed v1 transaction", async function () {
         let innerTransaction = new Transaction({
             sender: bob.address.bech32(),
-            receiver: "erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqzllls8a5w6u",
+            receiver: "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqzllls6prdez",
             gasLimit: 60000000n,
             data: Buffer.from("getContractConfig"),
             chainID: config.chainID,
@@ -141,7 +141,7 @@ describe("test relayed transactions factory", function () {
     it("should create relayed v1 transaction with guarded inner transaction", async function () {
         let innerTransaction = new Transaction({
             sender: bob.address.bech32(),
-            receiver: "erd1qqqqqqqqqqqqqpgq54tsxmej537z9leghvp69hfu4f8gg5eu396q83gnnz",
+            receiver: "drt1qqqqqqqqqqqqqpgq54tsxmej537z9leghvp69hfu4f8gg5eu396q6dlssu",
             gasLimit: 60000000n,
             chainID: config.chainID,
             data: Buffer.from("getContractConfig"),
@@ -177,7 +177,7 @@ describe("test relayed transactions factory", function () {
     it("should create guarded relayed v1 transaction with guarded inner transaction", async function () {
         let innerTransaction = new Transaction({
             sender: bob.address.bech32(),
-            receiver: "erd1qqqqqqqqqqqqqpgq54tsxmej537z9leghvp69hfu4f8gg5eu396q83gnnz",
+            receiver: "drt1qqqqqqqqqqqqqpgq54tsxmej537z9leghvp69hfu4f8gg5eu396q6dlssu",
             gasLimit: 60000000n,
             chainID: config.chainID,
             data: Buffer.from("addNumber"),
@@ -245,7 +245,7 @@ describe("test relayed transactions factory", function () {
     it("should create relayed v2 transaction", async function () {
         let innerTransaction = new Transaction({
             sender: bob.address.bech32(),
-            receiver: "erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqzllls8a5w6u",
+            receiver: "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqzllls6prdez",
             gasLimit: 0n,
             chainID: config.chainID,
             data: Buffer.from("getContractConfig"),

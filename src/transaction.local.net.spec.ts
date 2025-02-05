@@ -39,7 +39,7 @@ describe("test transaction", function () {
         let transactionOne = new Transaction({
             sender: alice.address,
             receiver: bob.address,
-            value: TokenTransfer.egldFromAmount(42),
+            value: TokenTransfer.rewaFromAmount(42),
             gasLimit: network.MinGasLimit,
             chainID: network.ChainID,
         });
@@ -47,7 +47,7 @@ describe("test transaction", function () {
         let transactionTwo = new Transaction({
             sender: alice.address,
             receiver: bob.address,
-            value: TokenTransfer.egldFromAmount(43),
+            value: TokenTransfer.rewaFromAmount(43),
             gasLimit: network.MinGasLimit,
             chainID: network.ChainID,
         });
@@ -72,7 +72,7 @@ describe("test transaction", function () {
         await bob.sync(provider);
         let newBalanceOfBob = new BigNumber(bob.account.balance.toString());
 
-        assert.deepEqual(TokenTransfer.egldFromAmount(85).valueOf(), newBalanceOfBob.minus(initialBalanceOfBob));
+        assert.deepEqual(TokenTransfer.rewaFromAmount(85).valueOf(), newBalanceOfBob.minus(initialBalanceOfBob));
     });
 
     it("should send transaction and wait for completion using the new proxy provider", async function () {
@@ -86,7 +86,7 @@ describe("test transaction", function () {
         let transactionOne = new Transaction({
             sender: alice.address,
             receiver: bob.address,
-            value: TokenTransfer.egldFromAmount(42),
+            value: TokenTransfer.rewaFromAmount(42),
             gasLimit: network.MinGasLimit,
             chainID: network.ChainID,
         });
@@ -103,7 +103,7 @@ describe("test transaction", function () {
         await bob.sync(provider);
         let newBalanceOfBob = new BigNumber(bob.account.balance.toString());
 
-        assert.deepEqual(TokenTransfer.egldFromAmount(42).valueOf(), newBalanceOfBob.minus(initialBalanceOfBob));
+        assert.deepEqual(TokenTransfer.rewaFromAmount(42).valueOf(), newBalanceOfBob.minus(initialBalanceOfBob));
     });
 
     it("should simulate transactions", async function () {
@@ -118,7 +118,7 @@ describe("test transaction", function () {
             data: new TransactionPayload("helloWorld"),
             gasLimit: 70000,
             receiver: alice.address,
-            value: TokenTransfer.egldFromAmount(1000),
+            value: TokenTransfer.rewaFromAmount(1000),
             chainID: network.ChainID,
         });
 
@@ -127,7 +127,7 @@ describe("test transaction", function () {
             data: new TransactionPayload("helloWorld"),
             gasLimit: 70000,
             receiver: alice.address,
-            value: TokenTransfer.egldFromAmount(1000000),
+            value: TokenTransfer.rewaFromAmount(1000000),
             chainID: network.ChainID,
         });
 
@@ -172,7 +172,7 @@ describe("test transaction", function () {
         await bob.sync(provider);
         const newBalanceOfBob = new BigNumber(bob.account.balance.toString());
 
-        assert.deepEqual(TokenTransfer.egldFromAmount(42).valueOf(), newBalanceOfBob.minus(initialBalanceOfBob));
+        assert.deepEqual(TokenTransfer.rewaFromAmount(42).valueOf(), newBalanceOfBob.minus(initialBalanceOfBob));
     });
 
     async function signTransaction(options: { transaction: Transaction; wallet: TestWallet }) {

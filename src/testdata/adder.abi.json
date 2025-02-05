@@ -13,7 +13,7 @@
             "gitVersion": "v0.50.1-3-gbed74682a"
         },
         "framework": {
-            "name": "multiversx-sc",
+            "name": "dharitri-sc",
             "version": "0.50.1"
         }
     },
@@ -66,7 +66,7 @@
             "outputs": []
         }
     ],
-    "esdtAttributes": [],
+    "dcdtAttributes": [],
     "hasCallback": false,
     "types": {}
 }

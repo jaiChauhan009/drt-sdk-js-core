@@ -68,16 +68,16 @@ export class NetworkConfig {
     static fromHttpResponse(payload: any): NetworkConfig {
         let networkConfig = new NetworkConfig();
 
-        networkConfig.ChainID = String(payload["erd_chain_id"]);
-        networkConfig.GasPerDataByte = Number(payload["erd_gas_per_data_byte"]);
-        networkConfig.TopUpFactor = Number(payload["erd_top_up_factor"]);
-        networkConfig.RoundDuration = Number(payload["erd_round_duration"]);
-        networkConfig.RoundsPerEpoch = Number(payload["erd_rounds_per_epoch"]);
-        networkConfig.TopUpRewardsGradientPoint = new BigNumber(payload["erd_rewards_top_up_gradient_point"]);
-        networkConfig.MinGasLimit = Number(payload["erd_min_gas_limit"]);
-        networkConfig.MinGasPrice = Number(payload["erd_min_gas_price"]);
-        networkConfig.MinTransactionVersion = Number(payload["erd_min_transaction_version"]);
-        networkConfig.GasPriceModifier = Number(payload["erd_gas_price_modifier"]);
+        networkConfig.ChainID = String(payload["drt_chain_id"]);
+        networkConfig.GasPerDataByte = Number(payload["drt_gas_per_data_byte"]);
+        networkConfig.TopUpFactor = Number(payload["drt_top_up_factor"]);
+        networkConfig.RoundDuration = Number(payload["drt_round_duration"]);
+        networkConfig.RoundsPerEpoch = Number(payload["drt_rounds_per_epoch"]);
+        networkConfig.TopUpRewardsGradientPoint = new BigNumber(payload["drt_rewards_top_up_gradient_point"]);
+        networkConfig.MinGasLimit = Number(payload["drt_min_gas_limit"]);
+        networkConfig.MinGasPrice = Number(payload["drt_min_gas_price"]);
+        networkConfig.MinTransactionVersion = Number(payload["drt_min_transaction_version"]);
+        networkConfig.GasPriceModifier = Number(payload["drt_gas_price_modifier"]);
 
         return networkConfig;
     }

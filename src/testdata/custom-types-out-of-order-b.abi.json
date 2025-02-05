@@ -1,12 +1,12 @@
 {
     "name": "Sample",
     "types": {
-        "EsdtTokenTransfer": {
+        "DcdtTokenTransfer": {
             "type": "struct",
             "fields": [
                 {
                     "name": "token_type",
-                    "type": "EsdtTokenType"
+                    "type": "DcdtTokenType"
                 },
                 {
                     "name": "token_identifier",
@@ -31,7 +31,7 @@
                 }
             ]
         },
-        "EsdtTokenType": {
+        "DcdtTokenType": {
             "type": "enum",
             "variants": [
                 {

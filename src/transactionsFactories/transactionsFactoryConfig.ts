@@ -7,16 +7,16 @@ export class TransactionsFactoryConfig {
     gasLimitPerByte: bigint;
     gasLimitIssue: bigint;
     gasLimitToggleBurnRoleGlobally: bigint;
-    gasLimitEsdtLocalMint: bigint;
-    gasLimitEsdtLocalBurn: bigint;
+    gasLimitDcdtLocalMint: bigint;
+    gasLimitDcdtLocalBurn: bigint;
     gasLimitSetSpecialRole: bigint;
     gasLimitPausing: bigint;
     gasLimitFreezing: bigint;
     gasLimitWiping: bigint;
-    gasLimitEsdtNftCreate: bigint;
-    gasLimitEsdtNftUpdateAttributes: bigint;
-    gasLimitEsdtNftAddQuantity: bigint;
-    gasLimitEsdtNftBurn: bigint;
+    gasLimitDcdtNftCreate: bigint;
+    gasLimitDcdtNftUpdateAttributes: bigint;
+    gasLimitDcdtNftAddQuantity: bigint;
+    gasLimitDcdtNftBurn: bigint;
     gasLimitStorePerByte: bigint;
     issueCost: bigint;
     gasLimitStake: bigint;
@@ -26,9 +26,9 @@ export class TransactionsFactoryConfig {
     gasLimitDelegationOperations: bigint;
     additionalGasLimitPerValidatorNode: bigint;
     additionalGasLimitForDelegationOperations: bigint;
-    gasLimitESDTTransfer: bigint;
-    gasLimitESDTNFTTransfer: bigint;
-    gasLimitMultiESDTNFTTransfer: bigint;
+    gasLimitDCDTTransfer: bigint;
+    gasLimitDCDTNFTTransfer: bigint;
+    gasLimitMultiDCDTNFTTransfer: bigint;
     gasLimitSaveKeyValue: bigint;
     gasLimitPersistPerByte: bigint;
     gasLimitSetGuardian: bigint;
@@ -36,9 +36,9 @@ export class TransactionsFactoryConfig {
     gasLimitUnguardAccount: bigint;
     gasLimitClaimDeveloperRewards: bigint;
     gasLimitChangeOwnerAddress: bigint;
-    gasLimitEsdtModifyRoyalties: bigint;
-    gasLimitEsdtModifyCreator: bigint;
-    gasLimitEsdtMetadataUpdate: bigint;
+    gasLimitDcdtModifyRoyalties: bigint;
+    gasLimitDcdtModifyCreator: bigint;
+    gasLimitDcdtMetadataUpdate: bigint;
     gasLimitSetNewUris: bigint;
     gasLimitNftMetadataRecreate: bigint;
     gasLimitNftChangeToDynamic: bigint;
@@ -55,21 +55,21 @@ export class TransactionsFactoryConfig {
         // Configuration for token operations
         this.gasLimitIssue = 60000000n;
         this.gasLimitToggleBurnRoleGlobally = 60000000n;
-        this.gasLimitEsdtLocalMint = 300000n;
-        this.gasLimitEsdtLocalBurn = 300000n;
+        this.gasLimitDcdtLocalMint = 300000n;
+        this.gasLimitDcdtLocalBurn = 300000n;
         this.gasLimitSetSpecialRole = 60000000n;
         this.gasLimitPausing = 60000000n;
         this.gasLimitFreezing = 60000000n;
         this.gasLimitWiping = 60000000n;
-        this.gasLimitEsdtNftCreate = 3000000n;
-        this.gasLimitEsdtNftUpdateAttributes = 1000000n;
-        this.gasLimitEsdtNftAddQuantity = 1000000n;
-        this.gasLimitEsdtNftBurn = 1000000n;
+        this.gasLimitDcdtNftCreate = 3000000n;
+        this.gasLimitDcdtNftUpdateAttributes = 1000000n;
+        this.gasLimitDcdtNftAddQuantity = 1000000n;
+        this.gasLimitDcdtNftBurn = 1000000n;
         this.gasLimitStorePerByte = 10000n;
         this.issueCost = 50000000000000000n;
-        this.gasLimitEsdtModifyRoyalties = 60000000n;
-        this.gasLimitEsdtModifyCreator = 60000000n;
-        this.gasLimitEsdtMetadataUpdate = 60000000n;
+        this.gasLimitDcdtModifyRoyalties = 60000000n;
+        this.gasLimitDcdtModifyCreator = 60000000n;
+        this.gasLimitDcdtMetadataUpdate = 60000000n;
         this.gasLimitSetNewUris = 60000000n;
         this.gasLimitNftMetadataRecreate = 60000000n;
         this.gasLimitNftChangeToDynamic = 60000000n;
@@ -93,9 +93,9 @@ export class TransactionsFactoryConfig {
         this.gasLimitUnguardAccount = 250000n;
 
         // Configuration for token transfers
-        this.gasLimitESDTTransfer = 200000n;
-        this.gasLimitESDTNFTTransfer = 200000n;
-        this.gasLimitMultiESDTNFTTransfer = 200000n;
+        this.gasLimitDCDTTransfer = 200000n;
+        this.gasLimitDCDTNFTTransfer = 200000n;
+        this.gasLimitMultiDCDTNFTTransfer = 200000n;
 
         // Configuration for smart contract operations
         this.gasLimitClaimDeveloperRewards = 6000000n;

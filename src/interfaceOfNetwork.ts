@@ -81,7 +81,7 @@ export interface ITransactionEvent {
     readonly identifier: string;
     readonly topics: ITransactionEventTopic[];
     readonly data: string;
-    // See https://github.com/multiversx/mx-sdk-js-network-providers/blob/v2.4.0/src/transactionEvents.ts#L13
+    // See https://github.com/dharitri/drt-sdk-js-network-providers/blob/v2.4.0/src/transactionEvents.ts#L13
     readonly dataPayload?: { valueOf(): Uint8Array };
     readonly additionalData?: { valueOf(): Uint8Array }[];
 

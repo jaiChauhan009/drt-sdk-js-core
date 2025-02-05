@@ -32,7 +32,7 @@ interface ITransactionEventTopic {
     valueOf(): any;
 }
 
-export interface IESDTIssueOutcome {
+export interface IDCDTIssueOutcome {
     tokenIdentifier: string;
 }
 
@@ -107,7 +107,7 @@ export interface IBurnQuantityOutcome {
  * @deprecated Use {@link TokenManagementTransactionsOutcomeParser}
  */
 export class TokenOperationsOutcomeParser {
-    parseIssueFungible(transaction: ITransactionOnNetwork): IESDTIssueOutcome {
+    parseIssueFungible(transaction: ITransactionOnNetwork): IDCDTIssueOutcome {
         this.ensureNoError(transaction);
 
         const event = this.findSingleEventByIdentifier(transaction, "issue");
@@ -115,7 +115,7 @@ export class TokenOperationsOutcomeParser {
         return { tokenIdentifier: tokenIdentifier };
     }
 
-    parseIssueNonFungible(transaction: ITransactionOnNetwork): IESDTIssueOutcome {
+    parseIssueNonFungible(transaction: ITransactionOnNetwork): IDCDTIssueOutcome {
         this.ensureNoError(transaction);
 
         const event = this.findSingleEventByIdentifier(transaction, "issueNonFungible");
@@ -123,7 +123,7 @@ export class TokenOperationsOutcomeParser {
         return { tokenIdentifier: tokenIdentifier };
     }
 
-    parseIssueSemiFungible(transaction: ITransactionOnNetwork): IESDTIssueOutcome {
+    parseIssueSemiFungible(transaction: ITransactionOnNetwork): IDCDTIssueOutcome {
         this.ensureNoError(transaction);
 
         const event = this.findSingleEventByIdentifier(transaction, "issueSemiFungible");
@@ -131,10 +131,10 @@ export class TokenOperationsOutcomeParser {
         return { tokenIdentifier: tokenIdentifier };
     }
 
-    parseRegisterMetaESDT(transaction: ITransactionOnNetwork): IESDTIssueOutcome {
+    parseRegisterMetaDCDT(transaction: ITransactionOnNetwork): IDCDTIssueOutcome {
         this.ensureNoError(transaction);
 
-        const event = this.findSingleEventByIdentifier(transaction, "registerMetaESDT");
+        const event = this.findSingleEventByIdentifier(transaction, "registerMetaDCDT");
         const tokenIdentifier = this.extractTokenIdentifier(event);
         return { tokenIdentifier: tokenIdentifier };
     }
@@ -145,7 +145,7 @@ export class TokenOperationsOutcomeParser {
         const eventRegister = this.findSingleEventByIdentifier(transaction, "registerAndSetAllRoles");
         const tokenIdentifier = this.extractTokenIdentifier(eventRegister);
 
-        const eventSetRole = this.findSingleEventByIdentifier(transaction, "ESDTSetRole");
+        const eventSetRole = this.findSingleEventByIdentifier(transaction, "DCDTSetRole");
         const roles = eventSetRole.topics.slice(3).map((topic) => topic.valueOf().toString());
 
         return { tokenIdentifier, roles };
@@ -164,7 +164,7 @@ export class TokenOperationsOutcomeParser {
     parseSetSpecialRole(transaction: ITransactionOnNetwork): ISetSpecialRoleOutcome {
         this.ensureNoError(transaction);
 
-        const event = this.findSingleEventByIdentifier(transaction, "ESDTSetRole");
+        const event = this.findSingleEventByIdentifier(transaction, "DCDTSetRole");
         const userAddress = event.address.toString();
         const tokenIdentifier = this.extractTokenIdentifier(event);
         const roles = event.topics.slice(3).map((topic) => topic.valueOf().toString());
@@ -174,7 +174,7 @@ export class TokenOperationsOutcomeParser {
     parseNFTCreate(transaction: ITransactionOnNetwork): INFTCreateOutcome {
         this.ensureNoError(transaction);
 
-        const event = this.findSingleEventByIdentifier(transaction, "ESDTNFTCreate");
+        const event = this.findSingleEventByIdentifier(transaction, "DCDTNFTCreate");
         const tokenIdentifier = this.extractTokenIdentifier(event);
         const nonce = this.extractNonce(event);
         const initialQuantity = this.extractAmount(event);
@@ -184,7 +184,7 @@ export class TokenOperationsOutcomeParser {
     parseLocalMint(transaction: ITransactionOnNetwork): IMintOutcome {
         this.ensureNoError(transaction);
 
-        const event = this.findSingleEventByIdentifier(transaction, "ESDTLocalMint");
+        const event = this.findSingleEventByIdentifier(transaction, "DCDTLocalMint");
         const userAddress = event.address.toString();
         const tokenIdentifier = this.extractTokenIdentifier(event);
         const nonce = this.extractNonce(event);
@@ -195,7 +195,7 @@ export class TokenOperationsOutcomeParser {
     parseLocalBurn(transaction: ITransactionOnNetwork): IBurnOutcome {
         this.ensureNoError(transaction);
 
-        const event = this.findSingleEventByIdentifier(transaction, "ESDTLocalBurn");
+        const event = this.findSingleEventByIdentifier(transaction, "DCDTLocalBurn");
         const userAddress = event.address.toString();
         const tokenIdentifier = this.extractTokenIdentifier(event);
         const nonce = this.extractNonce(event);
@@ -205,20 +205,20 @@ export class TokenOperationsOutcomeParser {
 
     parsePause(transaction: ITransactionOnNetwork): IPausingOutcome {
         this.ensureNoError(transaction);
-        const _ = this.findSingleEventByIdentifier(transaction, "ESDTPause");
+        const _ = this.findSingleEventByIdentifier(transaction, "DCDTPause");
         return {};
     }
 
     parseUnpause(transaction: ITransactionOnNetwork): IPausingOutcome {
         this.ensureNoError(transaction);
-        const _ = this.findSingleEventByIdentifier(transaction, "ESDTUnPause");
+        const _ = this.findSingleEventByIdentifier(transaction, "DCDTUnPause");
         return {};
     }
 
     parseFreeze(transaction: ITransactionOnNetwork): IFreezingOutcome {
         this.ensureNoError(transaction);
 
-        const event = this.findSingleEventByIdentifier(transaction, "ESDTFreeze");
+        const event = this.findSingleEventByIdentifier(transaction, "DCDTFreeze");
         const tokenIdentifier = this.extractTokenIdentifier(event);
         const nonce = this.extractNonce(event);
         const balance = this.extractAmount(event);
@@ -229,7 +229,7 @@ export class TokenOperationsOutcomeParser {
     parseUnfreeze(transaction: ITransactionOnNetwork): IFreezingOutcome {
         this.ensureNoError(transaction);
 
-        const event = this.findSingleEventByIdentifier(transaction, "ESDTUnFreeze");
+        const event = this.findSingleEventByIdentifier(transaction, "DCDTUnFreeze");
         const tokenIdentifier = this.extractTokenIdentifier(event);
         const nonce = this.extractNonce(event);
         const balance = this.extractAmount(event);
@@ -240,7 +240,7 @@ export class TokenOperationsOutcomeParser {
     parseWipe(transaction: ITransactionOnNetwork): IWipingOutcome {
         this.ensureNoError(transaction);
 
-        const event = this.findSingleEventByIdentifier(transaction, "ESDTWipe");
+        const event = this.findSingleEventByIdentifier(transaction, "DCDTWipe");
         const tokenIdentifier = this.extractTokenIdentifier(event);
         const nonce = this.extractNonce(event);
         const balance = this.extractAmount(event);
@@ -251,7 +251,7 @@ export class TokenOperationsOutcomeParser {
     parseUpdateAttributes(transaction: ITransactionOnNetwork): IUpdateAttributesOutcome {
         this.ensureNoError(transaction);
 
-        const event = this.findSingleEventByIdentifier(transaction, "ESDTNFTUpdateAttributes");
+        const event = this.findSingleEventByIdentifier(transaction, "DCDTNFTUpdateAttributes");
         const tokenIdentifier = this.extractTokenIdentifier(event);
         const nonce = this.extractNonce(event);
         const attributes = event.topics[3]?.valueOf();
@@ -261,7 +261,7 @@ export class TokenOperationsOutcomeParser {
     parseAddQuantity(transaction: ITransactionOnNetwork): IAddQuantityOutcome {
         this.ensureNoError(transaction);
 
-        const event = this.findSingleEventByIdentifier(transaction, "ESDTNFTAddQuantity");
+        const event = this.findSingleEventByIdentifier(transaction, "DCDTNFTAddQuantity");
         const tokenIdentifier = this.extractTokenIdentifier(event);
         const nonce = this.extractNonce(event);
         const addedQuantity = this.extractAmount(event);
@@ -271,7 +271,7 @@ export class TokenOperationsOutcomeParser {
     parseBurnQuantity(transaction: ITransactionOnNetwork): IBurnQuantityOutcome {
         this.ensureNoError(transaction);
 
-        const event = this.findSingleEventByIdentifier(transaction, "ESDTNFTBurn");
+        const event = this.findSingleEventByIdentifier(transaction, "DCDTNFTBurn");
         const tokenIdentifier = this.extractTokenIdentifier(event);
         const nonce = this.extractNonce(event);
         const burntQuantity = this.extractAmount(event);

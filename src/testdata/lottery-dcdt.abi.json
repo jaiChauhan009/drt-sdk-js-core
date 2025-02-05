@@ -8,11 +8,11 @@
             "short": "rustc 1.60.0-nightly (c5c610aad 2022-02-14)"
         },
         "contractCrate": {
-            "name": "lottery-esdt",
+            "name": "lottery-dcdt",
             "version": "0.0.0"
         },
         "framework": {
-            "name": "elrond-wasm",
+            "name": "numbat-wasm",
             "version": "0.30.0"
         }
     },

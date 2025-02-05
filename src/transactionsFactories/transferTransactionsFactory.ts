@@ -1,4 +1,4 @@
-import { EGLD_IDENTIFIER_FOR_MULTI_ESDTNFT_TRANSFER } from "../constants";
+import { REWA_IDENTIFIER_FOR_MULTI_DCDTNFT_TRANSFER } from "../constants";
 import { Err, ErrBadUsage } from "../errors";
 import {
     IAddress,
@@ -25,27 +25,27 @@ import { TransactionPayload } from "../transactionPayload";
 import { TokenTransfersDataBuilder } from "./tokenTransfersDataBuilder";
 import { TransactionBuilder } from "./transactionBuilder";
 
-const ADDITIONAL_GAS_FOR_ESDT_TRANSFER = 100000;
-const ADDITIONAL_GAS_FOR_ESDT_NFT_TRANSFER = 800000;
+const ADDITIONAL_GAS_FOR_DCDT_TRANSFER = 100000;
+const ADDITIONAL_GAS_FOR_DCDT_NFT_TRANSFER = 800000;
 
 interface IConfig {
     chainID: string;
     minGasLimit: bigint;
     gasLimitPerByte: bigint;
-    gasLimitESDTTransfer: bigint;
-    gasLimitESDTNFTTransfer: bigint;
-    gasLimitMultiESDTNFTTransfer: bigint;
+    gasLimitDCDTTransfer: bigint;
+    gasLimitDCDTNFTTransfer: bigint;
+    gasLimitMultiDCDTNFTTransfer: bigint;
 }
 
 interface IGasEstimator {
-    forEGLDTransfer(dataLength: number): number;
-    forESDTTransfer(dataLength: number): number;
-    forESDTNFTTransfer(dataLength: number): number;
-    forMultiESDTNFTTransfer(dataLength: number, numTransfers: number): number;
+    forREWATransfer(dataLength: number): number;
+    forDCDTTransfer(dataLength: number): number;
+    forDCDTNFTTransfer(dataLength: number): number;
+    forMultiDCDTNFTTransfer(dataLength: number, numTransfers: number): number;
 }
 
 /**
- * Use this class to create transactions for native token transfers (EGLD) or custom tokens transfers (ESDT/NTF/MetaESDT).
+ * Use this class to create transactions for native token transfers (REWA) or custom tokens transfers (DCDT/NTF/MetaDCDT).
  */
 export class TransferTransactionsFactory {
     private readonly config?: IConfig;
@@ -56,7 +56,7 @@ export class TransferTransactionsFactory {
     /**
      * Should be instantiated using `Config`.
      * Instantiating this class using GasEstimator represents the legacy version of this class.
-     * The legacy version contains methods like `createEGLDTransfer`, `createESDTTransfer`, `createESDTNFTTransfer` and `createMultiESDTNFTTransfer`.
+     * The legacy version contains methods like `createREWATransfer`, `createDCDTTransfer`, `createDCDTNFTTransfer` and `createMultiDCDTNFTTransfer`.
      * This was done in order to minimize breaking changes in client code.
      */
     constructor(options: IGasEstimator | { config: IConfig }) {
@@ -72,10 +72,10 @@ export class TransferTransactionsFactory {
     private isGasEstimator(options: any): options is IGasEstimator {
         return (
             typeof options === "object" &&
-            typeof options.forEGLDTransfer === "function" &&
-            typeof options.forESDTTransfer === "function" &&
-            typeof options.forESDTNFTTransfer === "function" &&
-            typeof options.forMultiESDTNFTTransfer === "function"
+            typeof options.forREWATransfer === "function" &&
+            typeof options.forDCDTTransfer === "function" &&
+            typeof options.forDCDTNFTTransfer === "function" &&
+            typeof options.forMultiDCDTNFTTransfer === "function"
         );
     }
 
@@ -109,7 +109,7 @@ export class TransferTransactionsFactory {
         });
     }
 
-    createTransactionForESDTTokenTransfer(options: {
+    createTransactionForDCDTTokenTransfer(options: {
         sender: IAddress;
         receiver: IAddress;
         tokenTransfers: TokenTransfer[];
@@ -123,10 +123,10 @@ export class TransferTransactionsFactory {
         }
 
         if (numberOfTransfers === 1) {
-            return this.createSingleESDTTransferTransaction(options);
+            return this.createSingleDCDTTransferTransaction(options);
         }
 
-        const { dataParts, extraGasForTransfer } = this.buildMultiESDTNFTTransferData(
+        const { dataParts, extraGasForTransfer } = this.buildMultiDCDTNFTTransferData(
             options.tokenTransfers,
             options.receiver,
         );
@@ -153,7 +153,7 @@ export class TransferTransactionsFactory {
         const numberOfTokens = tokenTransfers.length;
 
         if (numberOfTokens && options.data?.length) {
-            throw new ErrBadUsage("Can't set data field when sending esdt tokens");
+            throw new ErrBadUsage("Can't set data field when sending dcdt tokens");
         }
 
         if ((nativeAmount && numberOfTokens === 0) || options.data) {
@@ -165,12 +165,12 @@ export class TransferTransactionsFactory {
             });
         }
 
-        const nativeTransfer = nativeAmount ? TokenTransfer.newFromEgldAmount(nativeAmount) : undefined;
+        const nativeTransfer = nativeAmount ? TokenTransfer.newFromRewaAmount(nativeAmount) : undefined;
         if (nativeTransfer) {
             tokenTransfers.push(nativeTransfer);
         }
 
-        return this.createTransactionForESDTTokenTransfer({
+        return this.createTransactionForDCDTTokenTransfer({
             sender: options.sender,
             receiver: options.receiver,
             tokenTransfers: tokenTransfers,
@@ -181,7 +181,7 @@ export class TransferTransactionsFactory {
      * This is a legacy method. Can only be used if the class was instantiated using `GasEstimator`.
      * Use {@link createTransactionForNativeTokenTransfer} instead.
      */
-    createEGLDTransfer(args: {
+    createREWATransfer(args: {
         nonce?: INonce;
         value: ITransactionValue;
         receiver: IAddress;
@@ -193,12 +193,12 @@ export class TransferTransactionsFactory {
     }) {
         if (!this.isGasEstimatorDefined()) {
             throw new Err(
-                "You are calling a legacy function to create an EGLD transfer transaction. If this is your intent, then instantiate the class using a `GasEstimator`. Or, instead, use the new, recommended `createTransactionForNativeTokenTransfer` method.",
+                "You are calling a legacy function to create an REWA transfer transaction. If this is your intent, then instantiate the class using a `GasEstimator`. Or, instead, use the new, recommended `createTransactionForNativeTokenTransfer` method.",
             );
         }
 
         const dataLength = args.data?.length() || 0;
-        const estimatedGasLimit = this.gasEstimator!.forEGLDTransfer(dataLength);
+        const estimatedGasLimit = this.gasEstimator!.forREWATransfer(dataLength);
 
         return new Transaction({
             nonce: args.nonce,
@@ -214,9 +214,9 @@ export class TransferTransactionsFactory {
 
     /**
      * This is a legacy method. Can only be used if the class was instantiated using `GasEstimator`.
-     * Use {@link createTransactionForESDTTokenTransfer} instead.
+     * Use {@link createTransactionForDCDTTokenTransfer} instead.
      */
-    createESDTTransfer(args: {
+    createDCDTTransfer(args: {
         tokenTransfer: ITokenTransfer;
         nonce?: INonce;
         receiver: IAddress;
@@ -227,7 +227,7 @@ export class TransferTransactionsFactory {
     }) {
         if (!this.isGasEstimatorDefined()) {
             throw new Err(
-                "You are calling a legacy function to create an ESDT transfer transaction. If this is your intent, then instantiate the class using a `GasEstimator`. Or, instead, use the new, recommended `createTransactionForESDTTokenTransfer` method.",
+                "You are calling a legacy function to create an DCDT transfer transaction. If this is your intent, then instantiate the class using a `GasEstimator`. Or, instead, use the new, recommended `createTransactionForDCDTTokenTransfer` method.",
             );
         }
 
@@ -238,10 +238,10 @@ export class TransferTransactionsFactory {
             new BigUIntValue(args.tokenTransfer.valueOf()),
         ]);
 
-        const data = `ESDTTransfer@${argumentsString}`;
+        const data = `DCDTTransfer@${argumentsString}`;
         const transactionPayload = new TransactionPayload(data);
         const dataLength = transactionPayload.length() || 0;
-        const estimatedGasLimit = this.gasEstimator!.forESDTTransfer(dataLength);
+        const estimatedGasLimit = this.gasEstimator!.forDCDTTransfer(dataLength);
 
         return new Transaction({
             nonce: args.nonce,
@@ -256,9 +256,9 @@ export class TransferTransactionsFactory {
 
     /**
      * This is a legacy method. Can only be used if the class was instantiated using `GasEstimator`.
-     * Use {@link createTransactionForESDTTokenTransfer} instead.
+     * Use {@link createTransactionForDCDTTokenTransfer} instead.
      */
-    createESDTNFTTransfer(args: {
+    createDCDTNFTTransfer(args: {
         tokenTransfer: ITokenTransfer;
         nonce?: INonce;
         destination: IAddress;
@@ -269,7 +269,7 @@ export class TransferTransactionsFactory {
     }) {
         if (!this.isGasEstimatorDefined()) {
             throw new Err(
-                "You are calling a legacy function to create an ESDTNFT transfer transaction. If this is your intent, then instantiate the class using a `GasEstimator`. Or, instead, use the new, recommended `createTransactionForESDTTokenTransfer` method.",
+                "You are calling a legacy function to create an DCDTNFT transfer transaction. If this is your intent, then instantiate the class using a `GasEstimator`. Or, instead, use the new, recommended `createTransactionForDCDTTokenTransfer` method.",
             );
         }
 
@@ -284,10 +284,10 @@ export class TransferTransactionsFactory {
             new AddressValue(args.destination),
         ]);
 
-        const data = `ESDTNFTTransfer@${argumentsString}`;
+        const data = `DCDTNFTTransfer@${argumentsString}`;
         const transactionPayload = new TransactionPayload(data);
         const dataLength = transactionPayload.length() || 0;
-        const estimatedGasLimit = this.gasEstimator!.forESDTNFTTransfer(dataLength);
+        const estimatedGasLimit = this.gasEstimator!.forDCDTNFTTransfer(dataLength);
 
         return new Transaction({
             nonce: args.nonce,
@@ -302,9 +302,9 @@ export class TransferTransactionsFactory {
 
     /**
      * This is a legacy method. Can only be used if the class was instantiated using `GasEstimator`.
-     * Use {@link createTransactionForESDTTokenTransfer} instead.
+     * Use {@link createTransactionForDCDTTokenTransfer} instead.
      */
-    createMultiESDTNFTTransfer(args: {
+    createMultiDCDTNFTTransfer(args: {
         tokenTransfers: ITokenTransfer[];
         nonce?: INonce;
         destination: IAddress;
@@ -315,7 +315,7 @@ export class TransferTransactionsFactory {
     }) {
         if (!this.isGasEstimatorDefined()) {
             throw new Err(
-                "You are calling a legacy function to create a MultiESDTNFT transfer transaction. If this is your intent, then instantiate the class using a `GasEstimator`. Or, instead, use the new, recommended `createTransactionForESDTTokenTransfer` method.",
+                "You are calling a legacy function to create a MultiDCDTNFT transfer transaction. If this is your intent, then instantiate the class using a `GasEstimator`. Or, instead, use the new, recommended `createTransactionForDCDTTokenTransfer` method.",
             );
         }
 
@@ -340,10 +340,10 @@ export class TransferTransactionsFactory {
         }
 
         const { argumentsString } = new ArgSerializer().valuesToString(parts);
-        const data = `MultiESDTNFTTransfer@${argumentsString}`;
+        const data = `MultiDCDTNFTTransfer@${argumentsString}`;
         const transactionPayload = new TransactionPayload(data);
         const dataLength = transactionPayload.length() || 0;
-        const estimatedGasLimit = this.gasEstimator!.forMultiESDTNFTTransfer(dataLength, args.tokenTransfers.length);
+        const estimatedGasLimit = this.gasEstimator!.forMultiDCDTNFTTransfer(dataLength, args.tokenTransfers.length);
 
         return new Transaction({
             nonce: args.nonce,
@@ -356,7 +356,7 @@ export class TransferTransactionsFactory {
         });
     }
 
-    private createSingleESDTTransferTransaction(options: {
+    private createSingleDCDTTransferTransaction(options: {
         sender: IAddress;
         receiver: IAddress;
         tokenTransfers: TokenTransfer[];
@@ -383,39 +383,39 @@ export class TransferTransactionsFactory {
         let receiver = options.receiver;
 
         if (this.tokenComputer!.isFungible(transfer.token)) {
-            if (transfer.token.identifier === EGLD_IDENTIFIER_FOR_MULTI_ESDTNFT_TRANSFER) {
-                ({ dataParts, extraGasForTransfer } = this.buildMultiESDTNFTTransferData([transfer], receiver));
+            if (transfer.token.identifier === REWA_IDENTIFIER_FOR_MULTI_DCDTNFT_TRANSFER) {
+                ({ dataParts, extraGasForTransfer } = this.buildMultiDCDTNFTTransferData([transfer], receiver));
                 receiver = options.sender;
             } else {
-                ({ dataParts, extraGasForTransfer } = this.buildESDTTransferData(transfer));
+                ({ dataParts, extraGasForTransfer } = this.buildDCDTTransferData(transfer));
             }
         } else {
-            ({ dataParts, extraGasForTransfer } = this.buildSingleESDTNFTTransferData(transfer, receiver));
+            ({ dataParts, extraGasForTransfer } = this.buildSingleDCDTNFTTransferData(transfer, receiver));
             receiver = options.sender; // Override receiver for non-fungible tokens
         }
         return { dataParts, extraGasForTransfer, receiver };
     }
 
-    private buildMultiESDTNFTTransferData(transfer: TokenTransfer[], receiver: IAddress) {
+    private buildMultiDCDTNFTTransferData(transfer: TokenTransfer[], receiver: IAddress) {
         return {
-            dataParts: this.tokenTransfersDataBuilder!.buildDataPartsForMultiESDTNFTTransfer(receiver, transfer),
+            dataParts: this.tokenTransfersDataBuilder!.buildDataPartsForMultiDCDTNFTTransfer(receiver, transfer),
             extraGasForTransfer:
-                this.config!.gasLimitMultiESDTNFTTransfer * BigInt(transfer.length) +
-                BigInt(ADDITIONAL_GAS_FOR_ESDT_NFT_TRANSFER),
+                this.config!.gasLimitMultiDCDTNFTTransfer * BigInt(transfer.length) +
+                BigInt(ADDITIONAL_GAS_FOR_DCDT_NFT_TRANSFER),
         };
     }
 
-    private buildESDTTransferData(transfer: TokenTransfer) {
+    private buildDCDTTransferData(transfer: TokenTransfer) {
         return {
-            dataParts: this.tokenTransfersDataBuilder!.buildDataPartsForESDTTransfer(transfer),
-            extraGasForTransfer: this.config!.gasLimitESDTTransfer + BigInt(ADDITIONAL_GAS_FOR_ESDT_TRANSFER),
+            dataParts: this.tokenTransfersDataBuilder!.buildDataPartsForDCDTTransfer(transfer),
+            extraGasForTransfer: this.config!.gasLimitDCDTTransfer + BigInt(ADDITIONAL_GAS_FOR_DCDT_TRANSFER),
         };
     }
 
-    private buildSingleESDTNFTTransferData(transfer: TokenTransfer, receiver: IAddress) {
+    private buildSingleDCDTNFTTransferData(transfer: TokenTransfer, receiver: IAddress) {
         return {
-            dataParts: this.tokenTransfersDataBuilder!.buildDataPartsForSingleESDTNFTTransfer(transfer, receiver),
-            extraGasForTransfer: this.config!.gasLimitESDTNFTTransfer + BigInt(ADDITIONAL_GAS_FOR_ESDT_NFT_TRANSFER),
+            dataParts: this.tokenTransfersDataBuilder!.buildDataPartsForSingleDCDTNFTTransfer(transfer, receiver),
+            extraGasForTransfer: this.config!.gasLimitDCDTNFTTransfer + BigInt(ADDITIONAL_GAS_FOR_DCDT_NFT_TRANSFER),
         };
     }
 

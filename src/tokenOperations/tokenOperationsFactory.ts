@@ -14,19 +14,19 @@ interface IConfig {
     gasLimitPerByte: IGasLimit;
     gasLimitIssue: IGasLimit;
     gasLimitToggleBurnRoleGlobally: IGasLimit;
-    gasLimitESDTLocalMint: IGasLimit;
-    gasLimitESDTLocalBurn: IGasLimit;
+    gasLimitDCDTLocalMint: IGasLimit;
+    gasLimitDCDTLocalBurn: IGasLimit;
     gasLimitSetSpecialRole: IGasLimit;
     gasLimitPausing: IGasLimit;
     gasLimitFreezing: IGasLimit;
     gasLimitWiping: IGasLimit;
-    gasLimitESDTNFTCreate: IGasLimit;
-    gasLimitESDTNFTUpdateAttributes: IGasLimit;
-    gasLimitESDTNFTAddQuantity: IGasLimit;
-    gasLimitESDTNFTBurn: IGasLimit;
+    gasLimitDCDTNFTCreate: IGasLimit;
+    gasLimitDCDTNFTUpdateAttributes: IGasLimit;
+    gasLimitDCDTNFTAddQuantity: IGasLimit;
+    gasLimitDCDTNFTBurn: IGasLimit;
     gasLimitStorePerByte: IGasLimit;
     issueCost: BigNumber.Value;
-    esdtContractAddress: IAddress;
+    dcdtContractAddress: IAddress;
 }
 
 interface IBaseArgs {
@@ -65,7 +65,7 @@ interface IIssueSemiFungibleArgs extends IBaseArgs {
 
 interface IIssueNonFungibleArgs extends IIssueSemiFungibleArgs {}
 
-interface IRegisterMetaESDT extends IIssueSemiFungibleArgs {
+interface IRegisterMetaDCDT extends IIssueSemiFungibleArgs {
     numDecimals: number;
 }
 
@@ -99,7 +99,7 @@ interface ISemiFungibleSetSpecialRoleArgs extends IBaseArgs {
     addRoleNFTCreate: boolean;
     addRoleNFTBurn: boolean;
     addRoleNFTAddQuantity: boolean;
-    addRoleESDTTransferRole: boolean;
+    addRoleDCDTTransferRole: boolean;
 }
 
 interface INonFungibleSetSpecialRoleArgs extends IBaseArgs {
@@ -110,7 +110,7 @@ interface INonFungibleSetSpecialRoleArgs extends IBaseArgs {
     addRoleNFTBurn: boolean;
     addRoleNFTUpdateAttributes: boolean;
     addRoleNFTAddURI: boolean;
-    addRoleESDTTransferRole: boolean;
+    addRoleDCDTTransferRole: boolean;
 }
 
 interface INFTCreateArgs extends IBaseArgs {
@@ -215,7 +215,7 @@ export class TokenOperationsFactory {
 
         return this.createTransaction({
             sender: args.issuer,
-            receiver: this.config.esdtContractAddress,
+            receiver: this.config.dcdtContractAddress,
             nonce: args.transactionNonce,
             value: this.config.issueCost,
             gasPrice: args.gasPrice,
@@ -230,7 +230,7 @@ export class TokenOperationsFactory {
 ==========
 IMPORTANT!
 ==========
-You are about to issue (register) a new token. This will set the role "ESDTRoleBurnForAll" (globally).
+You are about to issue (register) a new token. This will set the role "DCDTRoleBurnForAll" (globally).
 Once the token is registered, you can unset this role by calling "unsetBurnRoleGlobally" (in a separate transaction).`);
     }
 
@@ -259,7 +259,7 @@ Once the token is registered, you can unset this role by calling "unsetBurnRoleG
 
         return this.createTransaction({
             sender: args.issuer,
-            receiver: this.config.esdtContractAddress,
+            receiver: this.config.dcdtContractAddress,
             nonce: args.transactionNonce,
             value: this.config.issueCost,
             gasPrice: args.gasPrice,
@@ -294,7 +294,7 @@ Once the token is registered, you can unset this role by calling "unsetBurnRoleG
 
         return this.createTransaction({
             sender: args.issuer,
-            receiver: this.config.esdtContractAddress,
+            receiver: this.config.dcdtContractAddress,
             nonce: args.transactionNonce,
             value: this.config.issueCost,
             gasPrice: args.gasPrice,
@@ -304,11 +304,11 @@ Once the token is registered, you can unset this role by calling "unsetBurnRoleG
         });
     }
 
-    registerMetaESDT(args: IRegisterMetaESDT): Transaction {
+    registerMetaDCDT(args: IRegisterMetaDCDT): Transaction {
         this.notifyAboutUnsettingBurnRoleGlobally();
 
         const parts = [
-            "registerMetaESDT",
+            "registerMetaDCDT",
             utf8ToHex(args.tokenName),
             utf8ToHex(args.tokenTicker),
             bigIntToHex(args.numDecimals),
@@ -330,7 +330,7 @@ Once the token is registered, you can unset this role by calling "unsetBurnRoleG
 
         return this.createTransaction({
             sender: args.issuer,
-            receiver: this.config.esdtContractAddress,
+            receiver: this.config.dcdtContractAddress,
             nonce: args.transactionNonce,
             value: this.config.issueCost,
             gasPrice: args.gasPrice,
@@ -353,7 +353,7 @@ Once the token is registered, you can unset this role by calling "unsetBurnRoleG
 
         return this.createTransaction({
             sender: args.issuer,
-            receiver: this.config.esdtContractAddress,
+            receiver: this.config.dcdtContractAddress,
             nonce: args.transactionNonce,
             value: this.config.issueCost,
             gasPrice: args.gasPrice,
@@ -368,7 +368,7 @@ Once the token is registered, you can unset this role by calling "unsetBurnRoleG
 
         return this.createTransaction({
             sender: args.manager,
-            receiver: this.config.esdtContractAddress,
+            receiver: this.config.dcdtContractAddress,
             nonce: args.transactionNonce,
             gasPrice: args.gasPrice,
             gasLimitHint: args.gasLimit,
@@ -382,7 +382,7 @@ Once the token is registered, you can unset this role by calling "unsetBurnRoleG
 
         return this.createTransaction({
             sender: args.manager,
-            receiver: this.config.esdtContractAddress,
+            receiver: this.config.dcdtContractAddress,
             nonce: args.transactionNonce,
             gasPrice: args.gasPrice,
             gasLimitHint: args.gasLimit,
@@ -396,13 +396,13 @@ Once the token is registered, you can unset this role by calling "unsetBurnRoleG
             "setSpecialRole",
             utf8ToHex(args.tokenIdentifier),
             addressToHex(args.user),
-            ...(args.addRoleLocalMint ? [utf8ToHex("ESDTRoleLocalMint")] : []),
-            ...(args.addRoleLocalBurn ? [utf8ToHex("ESDTRoleLocalBurn")] : []),
+            ...(args.addRoleLocalMint ? [utf8ToHex("DCDTRoleLocalMint")] : []),
+            ...(args.addRoleLocalBurn ? [utf8ToHex("DCDTRoleLocalBurn")] : []),
         ];
 
         return this.createTransaction({
             sender: args.manager,
-            receiver: this.config.esdtContractAddress,
+            receiver: this.config.dcdtContractAddress,
             nonce: args.transactionNonce,
             gasPrice: args.gasPrice,
             gasLimitHint: args.gasLimit,
@@ -416,15 +416,15 @@ Once the token is registered, you can unset this role by calling "unsetBurnRoleG
             "setSpecialRole",
             utf8ToHex(args.tokenIdentifier),
             addressToHex(args.user),
-            ...(args.addRoleNFTCreate ? [utf8ToHex("ESDTRoleNFTCreate")] : []),
-            ...(args.addRoleNFTBurn ? [utf8ToHex("ESDTRoleNFTBurn")] : []),
-            ...(args.addRoleNFTAddQuantity ? [utf8ToHex("ESDTRoleNFTAddQuantity")] : []),
-            ...(args.addRoleESDTTransferRole ? [utf8ToHex("ESDTTransferRole")] : []),
+            ...(args.addRoleNFTCreate ? [utf8ToHex("DCDTRoleNFTCreate")] : []),
+            ...(args.addRoleNFTBurn ? [utf8ToHex("DCDTRoleNFTBurn")] : []),
+            ...(args.addRoleNFTAddQuantity ? [utf8ToHex("DCDTRoleNFTAddQuantity")] : []),
+            ...(args.addRoleDCDTTransferRole ? [utf8ToHex("DCDTTransferRole")] : []),
         ];
 
         return this.createTransaction({
             sender: args.manager,
-            receiver: this.config.esdtContractAddress,
+            receiver: this.config.dcdtContractAddress,
             nonce: args.transactionNonce,
             gasPrice: args.gasPrice,
             gasLimitHint: args.gasLimit,
@@ -433,7 +433,7 @@ Once the token is registered, you can unset this role by calling "unsetBurnRoleG
         });
     }
 
-    setSpecialRoleOnMetaESDT(args: ISemiFungibleSetSpecialRoleArgs): Transaction {
+    setSpecialRoleOnMetaDCDT(args: ISemiFungibleSetSpecialRoleArgs): Transaction {
         return this.setSpecialRoleOnSemiFungible(args);
     }
 
@@ -442,16 +442,16 @@ Once the token is registered, you can unset this role by calling "unsetBurnRoleG
             "setSpecialRole",
             utf8ToHex(args.tokenIdentifier),
             addressToHex(args.user),
-            ...(args.addRoleNFTCreate ? [utf8ToHex("ESDTRoleNFTCreate")] : []),
-            ...(args.addRoleNFTBurn ? [utf8ToHex("ESDTRoleNFTBurn")] : []),
-            ...(args.addRoleNFTUpdateAttributes ? [utf8ToHex("ESDTRoleNFTUpdateAttributes")] : []),
-            ...(args.addRoleNFTAddURI ? [utf8ToHex("ESDTRoleNFTAddURI")] : []),
-            ...(args.addRoleESDTTransferRole ? [utf8ToHex("ESDTTransferRole")] : []),
+            ...(args.addRoleNFTCreate ? [utf8ToHex("DCDTRoleNFTCreate")] : []),
+            ...(args.addRoleNFTBurn ? [utf8ToHex("DCDTRoleNFTBurn")] : []),
+            ...(args.addRoleNFTUpdateAttributes ? [utf8ToHex("DCDTRoleNFTUpdateAttributes")] : []),
+            ...(args.addRoleNFTAddURI ? [utf8ToHex("DCDTRoleNFTAddURI")] : []),
+            ...(args.addRoleDCDTTransferRole ? [utf8ToHex("DCDTTransferRole")] : []),
         ];
 
         return this.createTransaction({
             sender: args.manager,
-            receiver: this.config.esdtContractAddress,
+            receiver: this.config.dcdtContractAddress,
             nonce: args.transactionNonce,
             gasPrice: args.gasPrice,
             gasLimitHint: args.gasLimit,
@@ -462,7 +462,7 @@ Once the token is registered, you can unset this role by calling "unsetBurnRoleG
 
     nftCreate(args: INFTCreateArgs): Transaction {
         const parts = [
-            "ESDTNFTCreate",
+            "DCDTNFTCreate",
             utf8ToHex(args.tokenIdentifier),
             bigIntToHex(args.initialQuantity),
             utf8ToHex(args.name),
@@ -482,7 +482,7 @@ Once the token is registered, you can unset this role by calling "unsetBurnRoleG
             nonce: args.transactionNonce,
             gasPrice: args.gasPrice,
             gasLimitHint: args.gasLimit,
-            executionGasLimit: this.config.gasLimitESDTNFTCreate.valueOf() + storageGasLimit.valueOf(),
+            executionGasLimit: this.config.gasLimitDCDTNFTCreate.valueOf() + storageGasLimit.valueOf(),
             dataParts: parts,
         });
     }
@@ -492,7 +492,7 @@ Once the token is registered, you can unset this role by calling "unsetBurnRoleG
 
         return this.createTransaction({
             sender: args.manager,
-            receiver: this.config.esdtContractAddress,
+            receiver: this.config.dcdtContractAddress,
             nonce: args.transactionNonce,
             gasPrice: args.gasPrice,
             gasLimitHint: args.gasLimit,
@@ -506,7 +506,7 @@ Once the token is registered, you can unset this role by calling "unsetBurnRoleG
 
         return this.createTransaction({
             sender: args.manager,
-            receiver: this.config.esdtContractAddress,
+            receiver: this.config.dcdtContractAddress,
             nonce: args.transactionNonce,
             gasPrice: args.gasPrice,
             gasLimitHint: args.gasLimit,
@@ -520,7 +520,7 @@ Once the token is registered, you can unset this role by calling "unsetBurnRoleG
 
         return this.createTransaction({
             sender: args.manager,
-            receiver: this.config.esdtContractAddress,
+            receiver: this.config.dcdtContractAddress,
             nonce: args.transactionNonce,
             gasPrice: args.gasPrice,
             gasLimitHint: args.gasLimit,
@@ -534,7 +534,7 @@ Once the token is registered, you can unset this role by calling "unsetBurnRoleG
 
         return this.createTransaction({
             sender: args.manager,
-            receiver: this.config.esdtContractAddress,
+            receiver: this.config.dcdtContractAddress,
             nonce: args.transactionNonce,
             gasPrice: args.gasPrice,
             gasLimitHint: args.gasLimit,
@@ -548,7 +548,7 @@ Once the token is registered, you can unset this role by calling "unsetBurnRoleG
 
         return this.createTransaction({
             sender: args.manager,
-            receiver: this.config.esdtContractAddress,
+            receiver: this.config.dcdtContractAddress,
             nonce: args.transactionNonce,
             gasPrice: args.gasPrice,
             gasLimitHint: args.gasLimit,
@@ -558,7 +558,7 @@ Once the token is registered, you can unset this role by calling "unsetBurnRoleG
     }
 
     localMint(args: ILocalMintArgs): Transaction {
-        const parts = ["ESDTLocalMint", utf8ToHex(args.tokenIdentifier), bigIntToHex(args.supplyToMint)];
+        const parts = ["DCDTLocalMint", utf8ToHex(args.tokenIdentifier), bigIntToHex(args.supplyToMint)];
 
         return this.createTransaction({
             sender: args.manager,
@@ -566,13 +566,13 @@ Once the token is registered, you can unset this role by calling "unsetBurnRoleG
             nonce: args.transactionNonce,
             gasPrice: args.gasPrice,
             gasLimitHint: args.gasLimit,
-            executionGasLimit: this.config.gasLimitESDTLocalMint,
+            executionGasLimit: this.config.gasLimitDCDTLocalMint,
             dataParts: parts,
         });
     }
 
     localBurn(args: ILocalBurnArgs): Transaction {
-        const parts = ["ESDTLocalBurn", utf8ToHex(args.tokenIdentifier), bigIntToHex(args.supplyToBurn)];
+        const parts = ["DCDTLocalBurn", utf8ToHex(args.tokenIdentifier), bigIntToHex(args.supplyToBurn)];
 
         return this.createTransaction({
             sender: args.manager,
@@ -580,14 +580,14 @@ Once the token is registered, you can unset this role by calling "unsetBurnRoleG
             nonce: args.transactionNonce,
             gasPrice: args.gasPrice,
             gasLimitHint: args.gasLimit,
-            executionGasLimit: this.config.gasLimitESDTLocalBurn,
+            executionGasLimit: this.config.gasLimitDCDTLocalBurn,
             dataParts: parts,
         });
     }
 
     updateAttributes(args: IUpdateAttributesArgs): Transaction {
         const parts = [
-            "ESDTNFTUpdateAttributes",
+            "DCDTNFTUpdateAttributes",
             utf8ToHex(args.tokenIdentifier),
             bigIntToHex(args.tokenNonce),
             bufferToHex(args.attributes),
@@ -599,14 +599,14 @@ Once the token is registered, you can unset this role by calling "unsetBurnRoleG
             nonce: args.transactionNonce,
             gasPrice: args.gasPrice,
             gasLimitHint: args.gasLimit,
-            executionGasLimit: this.config.gasLimitESDTNFTUpdateAttributes,
+            executionGasLimit: this.config.gasLimitDCDTNFTUpdateAttributes,
             dataParts: parts,
         });
     }
 
     addQuantity(args: IAddQuantityArgs): Transaction {
         const parts = [
-            "ESDTNFTAddQuantity",
+            "DCDTNFTAddQuantity",
             utf8ToHex(args.tokenIdentifier),
             bigIntToHex(args.tokenNonce),
             bigIntToHex(args.quantityToAdd),
@@ -618,14 +618,14 @@ Once the token is registered, you can unset this role by calling "unsetBurnRoleG
             nonce: args.transactionNonce,
             gasPrice: args.gasPrice,
             gasLimitHint: args.gasLimit,
-            executionGasLimit: this.config.gasLimitESDTNFTAddQuantity,
+            executionGasLimit: this.config.gasLimitDCDTNFTAddQuantity,
             dataParts: parts,
         });
     }
 
     burnQuantity(args: IBurnQuantityArgs): Transaction {
         const parts = [
-            "ESDTNFTBurn",
+            "DCDTNFTBurn",
             utf8ToHex(args.tokenIdentifier),
             bigIntToHex(args.tokenNonce),
             bigIntToHex(args.quantityToBurn),
@@ -637,7 +637,7 @@ Once the token is registered, you can unset this role by calling "unsetBurnRoleG
             nonce: args.transactionNonce,
             gasPrice: args.gasPrice,
             gasLimitHint: args.gasLimit,
-            executionGasLimit: this.config.gasLimitESDTNFTBurn,
+            executionGasLimit: this.config.gasLimitDCDTNFTBurn,
             dataParts: parts,
         });
     }

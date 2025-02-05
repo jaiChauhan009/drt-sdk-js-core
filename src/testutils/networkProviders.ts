@@ -15,23 +15,23 @@ export function createLocalnetProvider(): INetworkProvider {
 }
 
 export function createTestnetProvider(): INetworkProvider {
-    return new ApiNetworkProvider("https://testnet-api.multiversx.com", {
+    return new ApiNetworkProvider("https://testnet-api.dharitri.com", {
         timeout: 5000,
-        clientName: "mx-sdk-js-core/tests",
+        clientName: "drt-sdk-js-core/tests",
     });
 }
 
 export function createDevnetProvider(): INetworkProvider {
-    return new ProxyNetworkProvider("https://devnet-gateway.multiversx.com", {
+    return new ProxyNetworkProvider("https://devnet-gateway.dharitri.com", {
         timeout: 5000,
-        clientName: "mx-sdk-js-core/tests",
+        clientName: "drt-sdk-js-core/tests",
     });
 }
 
 export function createMainnetProvider(): INetworkProvider {
-    return new ProxyNetworkProvider("https://gateway.multiversx.com", {
+    return new ProxyNetworkProvider("https://gateway.dharitri.com", {
         timeout: 10000,
-        clientName: "mx-sdk-js-core/tests",
+        clientName: "drt-sdk-js-core/tests",
     });
 }
 

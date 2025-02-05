@@ -67,15 +67,15 @@ export class NetworkStatus {
     static fromHttpResponse(payload: any): NetworkStatus {
         let networkStatus = new NetworkStatus();
 
-        networkStatus.CurrentRound = Number(payload["erd_current_round"]);
-        networkStatus.EpochNumber = Number(payload["erd_epoch_number"]);
-        networkStatus.HighestFinalNonce = Number(payload["erd_highest_final_nonce"]);
-        networkStatus.Nonce = Number(payload["erd_nonce"]);
-        networkStatus.NonceAtEpochStart = Number(payload["erd_nonce_at_epoch_start"]);
-        networkStatus.NoncesPassedInCurrentEpoch = Number(payload["erd_nonces_passed_in_current_epoch"]);
-        networkStatus.RoundAtEpochStart = Number(payload["erd_round_at_epoch_start"]);
-        networkStatus.RoundsPassedInCurrentEpoch = Number(payload["erd_rounds_passed_in_current_epoch"]);
-        networkStatus.RoundsPerEpoch = Number(payload["erd_rounds_per_epoch"]);
+        networkStatus.CurrentRound = Number(payload["drt_current_round"]);
+        networkStatus.EpochNumber = Number(payload["drt_epoch_number"]);
+        networkStatus.HighestFinalNonce = Number(payload["drt_highest_final_nonce"]);
+        networkStatus.Nonce = Number(payload["drt_nonce"]);
+        networkStatus.NonceAtEpochStart = Number(payload["drt_nonce_at_epoch_start"]);
+        networkStatus.NoncesPassedInCurrentEpoch = Number(payload["drt_nonces_passed_in_current_epoch"]);
+        networkStatus.RoundAtEpochStart = Number(payload["drt_round_at_epoch_start"]);
+        networkStatus.RoundsPassedInCurrentEpoch = Number(payload["drt_rounds_passed_in_current_epoch"]);
+        networkStatus.RoundsPerEpoch = Number(payload["drt_rounds_per_epoch"]);
 
         return networkStatus;
     }

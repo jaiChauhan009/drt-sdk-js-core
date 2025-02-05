@@ -50,8 +50,8 @@ describe("test factory on testnet", function () {
         const tx1Outcome = parser.parseRegisterAndSetAllRoles(tx1OnNetwork);
 
         assert.isTrue(tx1Outcome.tokenIdentifier.includes("TEST"));
-        assert.isTrue(tx1Outcome.roles.includes("ESDTRoleLocalMint"));
-        assert.isTrue(tx1Outcome.roles.includes("ESDTRoleLocalBurn"));
+        assert.isTrue(tx1Outcome.roles.includes("DCDTRoleLocalMint"));
+        assert.isTrue(tx1Outcome.roles.includes("DCDTRoleLocalBurn"));
     });
 
     it("should register and set all roles (NFT)", async function () {
@@ -71,10 +71,10 @@ describe("test factory on testnet", function () {
         const tx1Outcome = parser.parseRegisterAndSetAllRoles(tx1OnNetwork);
 
         assert.isTrue(tx1Outcome.tokenIdentifier.includes("TEST"));
-        assert.isTrue(tx1Outcome.roles.includes("ESDTRoleNFTCreate"));
-        assert.isTrue(tx1Outcome.roles.includes("ESDTRoleNFTBurn"));
-        assert.isTrue(tx1Outcome.roles.includes("ESDTRoleNFTUpdateAttributes"));
-        assert.isTrue(tx1Outcome.roles.includes("ESDTRoleNFTAddURI"));
+        assert.isTrue(tx1Outcome.roles.includes("DCDTRoleNFTCreate"));
+        assert.isTrue(tx1Outcome.roles.includes("DCDTRoleNFTBurn"));
+        assert.isTrue(tx1Outcome.roles.includes("DCDTRoleNFTUpdateAttributes"));
+        assert.isTrue(tx1Outcome.roles.includes("DCDTRoleNFTAddURI"));
     });
 
     it("should register and set all roles (SFT)", async function () {
@@ -94,9 +94,9 @@ describe("test factory on testnet", function () {
         const tx1Outcome = parser.parseRegisterAndSetAllRoles(tx1OnNetwork);
 
         assert.isTrue(tx1Outcome.tokenIdentifier.includes("TEST"));
-        assert.isTrue(tx1Outcome.roles.includes("ESDTRoleNFTCreate"));
-        assert.isTrue(tx1Outcome.roles.includes("ESDTRoleNFTBurn"));
-        assert.isTrue(tx1Outcome.roles.includes("ESDTRoleNFTAddQuantity"));
+        assert.isTrue(tx1Outcome.roles.includes("DCDTRoleNFTCreate"));
+        assert.isTrue(tx1Outcome.roles.includes("DCDTRoleNFTBurn"));
+        assert.isTrue(tx1Outcome.roles.includes("DCDTRoleNFTAddQuantity"));
     });
 
     it("should register and set all roles (META)", async function () {
@@ -116,9 +116,9 @@ describe("test factory on testnet", function () {
         const tx1Outcome = parser.parseRegisterAndSetAllRoles(tx1OnNetwork);
 
         assert.isTrue(tx1Outcome.tokenIdentifier.includes("TEST"));
-        assert.isTrue(tx1Outcome.roles.includes("ESDTRoleNFTCreate"));
-        assert.isTrue(tx1Outcome.roles.includes("ESDTRoleNFTBurn"));
-        assert.isTrue(tx1Outcome.roles.includes("ESDTRoleNFTAddQuantity"));
+        assert.isTrue(tx1Outcome.roles.includes("DCDTRoleNFTCreate"));
+        assert.isTrue(tx1Outcome.roles.includes("DCDTRoleNFTBurn"));
+        assert.isTrue(tx1Outcome.roles.includes("DCDTRoleNFTAddQuantity"));
     });
 
     it("should issue fungible, then toggle global burn", async function () {
@@ -205,8 +205,8 @@ describe("test factory on testnet", function () {
 
         const tx2OnNetwork = await processTransaction(frank, tx2, "tx2");
         const tx2Outcome = parser.parseSetSpecialRole(tx2OnNetwork);
-        assert.include(tx2Outcome.roles, "ESDTRoleLocalMint");
-        assert.include(tx2Outcome.roles, "ESDTRoleLocalBurn");
+        assert.include(tx2Outcome.roles, "DCDTRoleLocalMint");
+        assert.include(tx2Outcome.roles, "DCDTRoleLocalBurn");
 
         // Mint (Grace mints for herself)
         const tx3 = factory.localMint({
@@ -281,7 +281,7 @@ describe("test factory on testnet", function () {
         const _tx3Outcome = parser.parseUnpause(tx3OnNetwork);
 
         // Send some tokens to Grace
-        const tx4 = transferTransactionsFactory.createESDTTransfer({
+        const tx4 = transferTransactionsFactory.createDCDTTransfer({
             tokenTransfer: TokenTransfer.fungibleFromBigInteger(tokenIdentifier, 10),
             sender: frank.account.address,
             receiver: grace.account.address,
@@ -318,7 +318,7 @@ describe("test factory on testnet", function () {
         assert.isTrue(tokenIdentifier.includes("FRANK"));
 
         // Send some tokens to Grace
-        const tx2 = transferTransactionsFactory.createESDTTransfer({
+        const tx2 = transferTransactionsFactory.createDCDTTransfer({
             tokenTransfer: TokenTransfer.fungibleFromBigInteger(tokenIdentifier, 10),
             sender: frank.account.address,
             receiver: grace.account.address,
@@ -385,7 +385,7 @@ describe("test factory on testnet", function () {
         assert.isTrue(tokenIdentifier.includes("FRANK"));
 
         // Send some tokens to Grace
-        const tx2 = transferTransactionsFactory.createESDTTransfer({
+        const tx2 = transferTransactionsFactory.createDCDTTransfer({
             tokenTransfer: TokenTransfer.fungibleFromBigInteger(tokenIdentifier, 10),
             sender: frank.account.address,
             receiver: grace.account.address,
@@ -460,14 +460,14 @@ describe("test factory on testnet", function () {
             addRoleNFTBurn: false,
             addRoleNFTUpdateAttributes: true,
             addRoleNFTAddURI: true,
-            addRoleESDTTransferRole: false,
+            addRoleDCDTTransferRole: false,
             transactionNonce: frank.account.nonce,
         });
 
         const tx2OnNetwork = await processTransaction(frank, tx2, "tx2");
         const tx2Outcome = parser.parseSetSpecialRole(tx2OnNetwork);
-        assert.include(tx2Outcome.roles, "ESDTRoleNFTCreate");
-        assert.include(tx2Outcome.roles, "ESDTRoleNFTUpdateAttributes");
+        assert.include(tx2Outcome.roles, "DCDTRoleNFTCreate");
+        assert.include(tx2Outcome.roles, "DCDTRoleNFTUpdateAttributes");
 
         // Create NFTs, then update their attributes
         for (let i = 1; i <= 2; i++) {
@@ -542,14 +542,14 @@ describe("test factory on testnet", function () {
             addRoleNFTCreate: true,
             addRoleNFTBurn: false,
             addRoleNFTAddQuantity: true,
-            addRoleESDTTransferRole: false,
+            addRoleDCDTTransferRole: false,
             transactionNonce: frank.account.nonce,
         });
 
         const tx2OnNetwork = await processTransaction(frank, tx2, "tx2");
         const tx2Outcome = parser.parseSetSpecialRole(tx2OnNetwork);
-        assert.include(tx2Outcome.roles, "ESDTRoleNFTCreate");
-        assert.include(tx2Outcome.roles, "ESDTRoleNFTAddQuantity");
+        assert.include(tx2Outcome.roles, "DCDTRoleNFTCreate");
+        assert.include(tx2Outcome.roles, "DCDTRoleNFTAddQuantity");
 
         for (let i = 1; i <= 2; i++) {
             // Create SFT
@@ -606,13 +606,13 @@ describe("test factory on testnet", function () {
         }
     });
 
-    it("should register and create Meta ESDT", async function () {
+    it("should register and create Meta DCDT", async function () {
         this.timeout(180000);
         await frank.sync(provider);
         await grace.sync(provider);
 
-        // Register Meta ESDT
-        const tx1 = factory.registerMetaESDT({
+        // Register Meta DCDT
+        const tx1 = factory.registerMetaDCDT({
             issuer: frank.address,
             tokenName: "FRANK",
             tokenTicker: "FRANK",
@@ -628,26 +628,26 @@ describe("test factory on testnet", function () {
         });
 
         const tx1OnNetwork = await processTransaction(frank, tx1, "tx1");
-        const tx1Outcome = parser.parseRegisterMetaESDT(tx1OnNetwork);
+        const tx1Outcome = parser.parseRegisterMetaDCDT(tx1OnNetwork);
         const tokenIdentifier = tx1Outcome.tokenIdentifier;
         assert.isTrue(tokenIdentifier.includes("FRANK"));
 
-        // Set roles (give Grace the ability to create Meta ESDTs)
-        const tx2 = factory.setSpecialRoleOnMetaESDT({
+        // Set roles (give Grace the ability to create Meta DCDTs)
+        const tx2 = factory.setSpecialRoleOnMetaDCDT({
             manager: frank.address,
             user: grace.address,
             tokenIdentifier: tokenIdentifier,
             addRoleNFTCreate: true,
             addRoleNFTBurn: false,
             addRoleNFTAddQuantity: true,
-            addRoleESDTTransferRole: false,
+            addRoleDCDTTransferRole: false,
             transactionNonce: frank.account.nonce,
         });
 
         const tx2OnNetwork = await processTransaction(frank, tx2, "tx2");
         const tx2Outcome = parser.parseSetSpecialRole(tx2OnNetwork);
-        assert.include(tx2Outcome.roles, "ESDTRoleNFTCreate");
-        assert.include(tx2Outcome.roles, "ESDTRoleNFTAddQuantity");
+        assert.include(tx2Outcome.roles, "DCDTRoleNFTCreate");
+        assert.include(tx2Outcome.roles, "DCDTRoleNFTAddQuantity");
 
         // Create tokens
         for (let i = 1; i <= 3; i++) {

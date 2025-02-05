@@ -26,8 +26,8 @@ describe("test transactions converter", async () => {
         const transaction = new Transaction({
             nonce: 90,
             value: BigInt("123456789000000000000000000000"),
-            sender: "erd1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssycr6th",
-            receiver: "erd1spyavw0956vq68xj8y4tenjpq2wd5a9p2c6j8gsz7ztyrnpxrruqzu66jx",
+            sender: "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf",
+            receiver: "drt1spyavw0956vq68xj8y4tenjpq2wd5a9p2c6j8gsz7ztyrnpxrruqlqde3c",
             senderUsername: "alice",
             receiverUsername: "bob",
             gasPrice: 1000000000,
@@ -46,8 +46,8 @@ describe("test transactions converter", async () => {
         assert.deepEqual(plainObject, {
             nonce: 90,
             value: "123456789000000000000000000000",
-            sender: "erd1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssycr6th",
-            receiver: "erd1spyavw0956vq68xj8y4tenjpq2wd5a9p2c6j8gsz7ztyrnpxrruqzu66jx",
+            sender: "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf",
+            receiver: "drt1spyavw0956vq68xj8y4tenjpq2wd5a9p2c6j8gsz7ztyrnpxrruqlqde3c",
             senderUsername: "YWxpY2U=",
             receiverUsername: "Ym9i",
             gasPrice: 1000000000,
@@ -71,7 +71,7 @@ describe("test transactions converter", async () => {
             nonce: 7,
             function: "hello",
             logs: new TransactionLogsOnNetwork({
-                address: Address.fromBech32("erd1k2s324ww2g0yj38qn2ch2jwctdy8mnfxep94q9arncc6xecg3xaq6mjse8"),
+                address: Address.fromBech32("drt1k2s324ww2g0yj38qn2ch2jwctdy8mnfxep94q9arncc6xecg3xaq889n6e"),
                 events: [
                     new TransactionEventOnNetwork({
                         identifier: "foobar",
@@ -86,7 +86,7 @@ describe("test transactions converter", async () => {
                     nonce: 8,
                     data: "@6f6b@2a",
                     logs: new TransactionLogsOnNetwork({
-                        address: Address.fromBech32("erd1k2s324ww2g0yj38qn2ch2jwctdy8mnfxep94q9arncc6xecg3xaq6mjse8"),
+                        address: Address.fromBech32("drt1k2s324ww2g0yj38qn2ch2jwctdy8mnfxep94q9arncc6xecg3xaq889n6e"),
                         events: [
                             new TransactionEventOnNetwork({
                                 identifier: "writeLog",
@@ -118,7 +118,7 @@ describe("test transactions converter", async () => {
                     receiver: "",
                     data: Buffer.from("@6f6b@2a"),
                     logs: {
-                        address: "erd1k2s324ww2g0yj38qn2ch2jwctdy8mnfxep94q9arncc6xecg3xaq6mjse8",
+                        address: "drt1k2s324ww2g0yj38qn2ch2jwctdy8mnfxep94q9arncc6xecg3xaq889n6e",
                         events: [
                             new TransactionEvent({
                                 address: "",
@@ -135,7 +135,7 @@ describe("test transactions converter", async () => {
                 }),
             ],
             logs: new TransactionLogs({
-                address: "erd1k2s324ww2g0yj38qn2ch2jwctdy8mnfxep94q9arncc6xecg3xaq6mjse8",
+                address: "drt1k2s324ww2g0yj38qn2ch2jwctdy8mnfxep94q9arncc6xecg3xaq889n6e",
                 events: [
                     new TransactionEvent({
                         address: "",
@@ -161,11 +161,11 @@ describe("test transactions converter", async () => {
                     nonce: 42,
                     data: "@657865637574696f6e206661696c6564",
                     logs: new TransactionLogsOnNetwork({
-                        address: Address.fromBech32("erd1qqqqqqqqqqqqqpgqj8k976l59n7fyth8ujl4as5uyn3twn0ha0wsge5r5x"),
+                        address: Address.fromBech32("drt1qqqqqqqqqqqqqpgqj8k976l59n7fyth8ujl4as5uyn3twn0ha0ws49rqhc"),
                         events: [
                             new TransactionEventOnNetwork({
                                 address: Address.fromBech32(
-                                    "erd1qqqqqqqqqqqqqpgqj8k976l59n7fyth8ujl4as5uyn3twn0ha0wsge5r5x",
+                                    "drt1qqqqqqqqqqqqqpgqj8k976l59n7fyth8ujl4as5uyn3twn0ha0ws49rqhc",
                                 ),
                                 identifier: "signalError",
                                 topics: [
@@ -198,14 +198,14 @@ describe("test transactions converter", async () => {
                     receiver: "",
                     data: Buffer.from("@657865637574696f6e206661696c6564"),
                     logs: {
-                        address: "erd1qqqqqqqqqqqqqpgqj8k976l59n7fyth8ujl4as5uyn3twn0ha0wsge5r5x",
+                        address: "drt1qqqqqqqqqqqqqpgqj8k976l59n7fyth8ujl4as5uyn3twn0ha0ws49rqhc",
                         events: [
                             new TransactionEvent({
-                                address: "erd1qqqqqqqqqqqqqpgqj8k976l59n7fyth8ujl4as5uyn3twn0ha0wsge5r5x",
+                                address: "drt1qqqqqqqqqqqqqpgqj8k976l59n7fyth8ujl4as5uyn3twn0ha0ws49rqhc",
                                 identifier: "signalError",
                                 topics: [
                                     Address.fromBech32(
-                                        "erd1testnlersh4z0wsv8kjx39me4rmnvjkwu8dsaea7ukdvvc9z396qykv7z7",
+                                        "drt1testnlersh4z0wsv8kjx39me4rmnvjkwu8dsaea7ukdvvc9z396qe2mapq",
                                     ).getPublicKey(),
                                     Buffer.from("insufficient funds"),
                                 ],

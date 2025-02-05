@@ -1,7 +1,7 @@
-import * as errors from "../errors";
-import { EndpointDefinition } from "./typesystem";
-import { Interaction } from "./interaction";
 import BigNumber from "bignumber.js";
+import * as errors from "../errors";
+import { Interaction } from "./interaction";
+import { EndpointDefinition } from "./typesystem";
 
 /**
  * An interaction checker that aims to be as strict as possible.
@@ -21,10 +21,10 @@ export class InteractionChecker {
 
     private checkPayable(interaction: Interaction, definition: EndpointDefinition) {
         let hasValue = !new BigNumber(interaction.getValue().toString()).isZero();
-        let isPayableInEGLD = definition.modifiers.isPayableInEGLD();
+        let isPayableInREWA = definition.modifiers.isPayableInREWA();
 
-        if (hasValue && !isPayableInEGLD) {
-            throw new errors.ErrContractInteraction("cannot send EGLD value to non-payable");
+        if (hasValue && !isPayableInREWA) {
+            throw new errors.ErrContractInteraction("cannot send REWA value to non-payable");
         }
     }
 

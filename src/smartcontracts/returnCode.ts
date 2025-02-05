@@ -1,5 +1,5 @@
 /**
- * Also see: https://github.com/multiversx/mx-chain-vm-common-go/blob/master/returnCodes.go
+ * Also see: https://github.com/dharitri/drt-chain-vm-common-go/blob/master/returnCodes.go
  */
 export class ReturnCode {
     static None = new ReturnCode("");

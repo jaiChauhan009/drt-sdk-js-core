@@ -1,22 +1,22 @@
-# MultiversX SDK for JavaScript and TypeScript
+# DharitrI SDK for JavaScript and TypeScript
 
-MultiversX SDK for JavaScript and TypeScript (written in TypeScript).
+DharitrI SDK for JavaScript and TypeScript (written in TypeScript).
 
 ## Documentation
 
-- [Cookbook](https://docs.multiversx.com/sdk-and-tools/sdk-js/sdk-js-cookbook/)
-- [Auto-generated documentation](https://multiversx.github.io/mx-sdk-js-core/)
+- [Cookbook](https://docs.dharitri.com/sdk-and-tools/sdk-js/sdk-js-cookbook/)
+- [Auto-generated documentation](https://dharitri.github.io/drt-sdk-js-core/)
 
 ## Distribution
 
-[npm](https://www.npmjs.com/package/@multiversx/sdk-core)
+[npm](https://www.npmjs.com/package/@dharitri/sdk-core)
 
 ## Installation
 
 `sdk-core` is delivered via **npm** and it can be installed as follows:
 
 ```
-npm install @multiversx/sdk-core
+npm install @dharitri/sdk-core
 ```
 
 ## Development
@@ -42,12 +42,12 @@ This package can make HTTP requests using `axios`, which is not bundled by defau
 npm install axios
 ```
 
-### @multiversx/sdk-bls-wasm
+### @dharitri/sdk-bls-wasm
 
-This package requires `@multiversx/sdk-bls-wasm` for BLS (Boneh-Lynn-Shacham) cryptographic functions, which is not bundled by default. If you plan to use BLS functionality, make sure to install this optional dependency:
+This package requires `@dharitri/sdk-bls-wasm` for BLS (Boneh-Lynn-Shacham) cryptographic functions, which is not bundled by default. If you plan to use BLS functionality, make sure to install this optional dependency:
 
 ```bash
-npm install @multiversx/sdk-bls-wasm
+npm install @dharitri/sdk-bls-wasm
 ```
 
 ### bip39
@@ -91,4 +91,4 @@ In order to run the tests **in the browser**, do as follows:
 make clean && npm run browser-tests
 ```
 
-For the `localnet` tests, make sure you have a _local testnet_ up & running. In order to start a _local testnet_, follow [this](https://docs.multiversx.com/developers/setup-local-testnet/).
+For the `localnet` tests, make sure you have a _local testnet_ up & running. In order to start a _local testnet_, follow [this](https://docs.dharitri.com/developers/setup-local-testnet/).

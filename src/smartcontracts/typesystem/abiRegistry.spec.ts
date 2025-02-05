@@ -25,14 +25,14 @@ describe("test abi registry", () => {
         assert.instanceOf(getCounter.output[0].type, I64Type);
 
         // Lottery
-        registry = await loadAbiRegistry("src/testdata/lottery-esdt.abi.json");
+        registry = await loadAbiRegistry("src/testdata/lottery-dcdt.abi.json");
         let start = registry.getEndpoint("start");
         let getStatus = registry.getEndpoint("status");
         let getLotteryInfo = registry.getEndpoint("getLotteryInfo");
 
         // basic-features
         registry = await loadAbiRegistry("src/testdata/basic-features.abi.json");
-        let returnManagedDecimal = registry.getEndpoint("returns_egld_decimal");
+        let returnManagedDecimal = registry.getEndpoint("returns_rewa_decimal");
         let returnsManagedDecimalSigned = registry.getEndpoint("managed_decimal_ln");
         let returnsManagedDecimalVariable = registry.getEndpoint("managed_decimal_addition_var");
 
@@ -85,9 +85,9 @@ describe("test abi registry", () => {
         let result = bc.decodeTopLevel(buff, performAction.output[0].type);
         assert.deepEqual(
             JSON.stringify(result.valueOf()),
-            `{"name":"SendTransferExecuteEgld","fields":[{"to":{"bech32":"erd1qqqqqqqqqqqqqpgq6qr0w0zzyysklfneh32eqp2cf383zc89d8sstnkl60","pubkey":"00000000000000000500d006f73c4221216fa679bc559005584c4f1160e569e1"},"egld_amount":"42","opt_gas_limit":null,"endpoint_name":{"type":"Buffer","data":[97,100,100]},"arguments":[{"type":"Buffer","data":[7]}]}]}`,
+            `{"name":"SendTransferExecuteRewa","fields":[{"to":{"bech32":"drt1qqqqqqqqqqqqqpgq6qr0w0zzyysklfneh32eqp2cf383zc89d8ssk0pue3","pubkey":"00000000000000000500d006f73c4221216fa679bc559005584c4f1160e569e1"},"rewa_amount":"42","opt_gas_limit":null,"endpoint_name":{"type":"Buffer","data":[97,100,100]},"arguments":[{"type":"Buffer","data":[7]}]}]}`,
         );
-        assert.equal(result.valueOf().name, "SendTransferExecuteEgld");
+        assert.equal(result.valueOf().name, "SendTransferExecuteRewa");
     });
 
     it("should load ABI containing arrayN and nested structs", async () => {
@@ -109,13 +109,13 @@ describe("test abi registry", () => {
     it("should load ABI when custom types are out of order (a)", async () => {
         const registry = await loadAbiRegistry("src/testdata/custom-types-out-of-order-a.abi.json");
 
-        assert.deepEqual(registry.getStruct("EsdtTokenTransfer").getNamesOfDependencies(), [
-            "EsdtTokenType",
+        assert.deepEqual(registry.getStruct("DcdtTokenTransfer").getNamesOfDependencies(), [
+            "DcdtTokenType",
             "TokenIdentifier",
             "u64",
             "BigUint",
         ]);
-        assert.deepEqual(registry.getEnum("EsdtTokenType").getNamesOfDependencies(), []);
+        assert.deepEqual(registry.getEnum("DcdtTokenType").getNamesOfDependencies(), []);
         assert.deepEqual(registry.getStruct("TypeA").getNamesOfDependencies(), ["TypeB", "TypeC", "u64"]);
         assert.deepEqual(registry.getStruct("TypeB").getNamesOfDependencies(), ["TypeC", "u64"]);
         assert.deepEqual(registry.getStruct("TypeC").getNamesOfDependencies(), ["u64"]);
@@ -124,13 +124,13 @@ describe("test abi registry", () => {
     it("should load ABI when custom types are out of order (b)", async () => {
         const registry = await loadAbiRegistry("src/testdata/custom-types-out-of-order-b.abi.json");
 
-        assert.deepEqual(registry.getStruct("EsdtTokenTransfer").getNamesOfDependencies(), [
-            "EsdtTokenType",
+        assert.deepEqual(registry.getStruct("DcdtTokenTransfer").getNamesOfDependencies(), [
+            "DcdtTokenType",
             "TokenIdentifier",
             "u64",
             "BigUint",
         ]);
-        assert.deepEqual(registry.getEnum("EsdtTokenType").getNamesOfDependencies(), []);
+        assert.deepEqual(registry.getEnum("DcdtTokenType").getNamesOfDependencies(), []);
         assert.deepEqual(registry.getStruct("TypeA").getNamesOfDependencies(), ["TypeB", "TypeC", "u64"]);
         assert.deepEqual(registry.getStruct("TypeB").getNamesOfDependencies(), ["TypeC", "u64"]);
         assert.deepEqual(registry.getStruct("TypeC").getNamesOfDependencies(), ["u64"]);
@@ -177,13 +177,13 @@ describe("test abi registry", () => {
     });
 
     it("should load ABI wih events", async () => {
-        const registry = await loadAbiRegistry("src/testdata/esdt-safe.abi.json");
+        const registry = await loadAbiRegistry("src/testdata/dcdt-safe.abi.json");
 
         assert.lengthOf(registry.events, 8);
 
         const depositEvent = registry.getEvent("deposit");
         assert.deepEqual(depositEvent.inputs[0].type, new AddressType());
-        assert.deepEqual(depositEvent.inputs[1].type, new ListType(registry.getCustomType("EsdtTokenPayment")));
+        assert.deepEqual(depositEvent.inputs[1].type, new ListType(registry.getCustomType("DcdtTokenPayment")));
         assert.deepEqual(depositEvent.inputs[2].type, registry.getCustomType("DepositEvent"));
 
         const setStatusEvent = registry.getEvent("setStatusEvent");
@@ -203,7 +203,7 @@ describe("test abi registry", () => {
     });
 
     it("should load abi with title for endpoint", async () => {
-        const registry = await loadAbiRegistry("src/testdata/lottery-esdt.abi.json");
+        const registry = await loadAbiRegistry("src/testdata/lottery-dcdt.abi.json");
 
         const endpoint = registry.getEndpoint("createLotteryPool");
 

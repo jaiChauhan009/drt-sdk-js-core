@@ -38,13 +38,13 @@ describe("test parsers", () => {
                 events: [
                     {
                         address: grace.address,
-                        identifier: "ESDTSetRole",
+                        identifier: "DCDTSetRole",
                         topics: [
                             createTopic(Buffer.from("FOOBAR")),
                             createTopic(Buffer.from("")),
                             createTopic(Buffer.from("")),
-                            createTopic(Buffer.from("ESDTRoleLocalMint")),
-                            createTopic(Buffer.from("ESDTRoleLocalBurn")),
+                            createTopic(Buffer.from("DCDTRoleLocalMint")),
+                            createTopic(Buffer.from("DCDTRoleLocalBurn")),
                         ],
                         data: "",
                     },
@@ -53,7 +53,7 @@ describe("test parsers", () => {
         });
 
         assert.equal(outcome.tokenIdentifier, "FOOBAR");
-        assert.deepEqual(outcome.roles, ["ESDTRoleLocalMint", "ESDTRoleLocalBurn"]);
+        assert.deepEqual(outcome.roles, ["DCDTRoleLocalMint", "DCDTRoleLocalBurn"]);
         assert.equal(outcome.userAddress, grace.address.toString());
     });
 
@@ -65,7 +65,7 @@ describe("test parsers", () => {
                 events: [
                     {
                         address: grace.address,
-                        identifier: "ESDTLocalMint",
+                        identifier: "DCDTLocalMint",
                         topics: [
                             createTopic(Buffer.from("FOOBAR")),
                             createTopic(Buffer.from("")),
@@ -91,7 +91,7 @@ describe("test parsers", () => {
                 events: [
                     {
                         address: grace.address,
-                        identifier: "ESDTNFTCreate",
+                        identifier: "DCDTNFTCreate",
                         topics: [
                             createTopic(Buffer.from("FOOBAR")),
                             createTopic(bigIntToBuffer("42")),

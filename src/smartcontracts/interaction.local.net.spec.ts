@@ -1,20 +1,20 @@
 import BigNumber from "bignumber.js";
 import { assert } from "chai";
+import { promises } from "fs";
+import { QueryRunnerAdapter } from "../adapters/queryRunnerAdapter";
+import { SmartContractQueriesController } from "../smartContractQueriesController";
 import { loadAbiRegistry, loadTestWallets, prepareDeployment, TestWallet } from "../testutils";
 import { ContractController } from "../testutils/contractController";
 import { createLocalnetProvider } from "../testutils/networkProviders";
 import { Transaction } from "../transaction";
 import { TransactionComputer } from "../transactionComputer";
+import { SmartContractTransactionsFactory } from "../transactionsFactories/smartContractTransactionsFactory";
+import { TransactionsFactoryConfig } from "../transactionsFactories/transactionsFactoryConfig";
+import { TransactionWatcher } from "../transactionWatcher";
 import { Interaction } from "./interaction";
+import { ResultsParser } from "./resultsParser";
 import { ReturnCode } from "./returnCode";
 import { SmartContract } from "./smartContract";
-import { TransactionsFactoryConfig } from "../transactionsFactories/transactionsFactoryConfig";
-import { SmartContractTransactionsFactory } from "../transactionsFactories/smartContractTransactionsFactory";
-import { promises } from "fs";
-import { ResultsParser } from "./resultsParser";
-import { TransactionWatcher } from "../transactionWatcher";
-import { SmartContractQueriesController } from "../smartContractQueriesController";
-import { QueryRunnerAdapter } from "../adapters/queryRunnerAdapter";
 import { ManagedDecimalSignedValue, ManagedDecimalValue } from "./typesystem";
 
 describe("test smart contract interactor", function () {
@@ -210,17 +210,17 @@ describe("test smart contract interactor", function () {
         } = await controller.deploy(deployTransaction);
         assert.isTrue(returnCode.isSuccess());
 
-        let returnEgldInteraction = <Interaction>(
+        let returnRewaInteraction = <Interaction>(
             contract.methods
-                .returns_egld_decimal([])
+                .returns_rewa_decimal([])
                 .withGasLimit(10000000)
                 .withChainID(network.ChainID)
                 .withSender(alice.address)
                 .withValue(1)
         );
 
-        // returnEgld()
-        let returnEgldTransaction = returnEgldInteraction
+        // returnRewa()
+        let returnRewaTransaction = returnRewaInteraction
             .withSender(alice.address)
             .useThenIncrementNonceOf(alice.account)
             .buildTransaction();
@@ -281,12 +281,12 @@ describe("test smart contract interactor", function () {
             .useThenIncrementNonceOf(alice.account)
             .buildTransaction();
 
-        // returnEgld()
-        await signTransaction({ transaction: returnEgldTransaction, wallet: alice });
-        let { bundle: bundleEgld } = await controller.execute(returnEgldInteraction, returnEgldTransaction);
-        assert.isTrue(bundleEgld.returnCode.equals(ReturnCode.Ok));
-        assert.lengthOf(bundleEgld.values, 1);
-        assert.deepEqual(bundleEgld.values[0], new ManagedDecimalValue("0.000000000000000001", 18));
+        // returnRewa()
+        await signTransaction({ transaction: returnRewaTransaction, wallet: alice });
+        let { bundle: bundleRewa } = await controller.execute(returnRewaInteraction, returnRewaTransaction);
+        assert.isTrue(bundleRewa.returnCode.equals(ReturnCode.Ok));
+        assert.lengthOf(bundleRewa.values, 1);
+        assert.deepEqual(bundleRewa.values[0], new ManagedDecimalValue("0.000000000000000001", 18));
 
         // addition with const decimals()
         await signTransaction({ transaction: additionTransaction, wallet: alice });
@@ -476,10 +476,10 @@ describe("test smart contract interactor", function () {
         typedBundle = resultsParser.parseOutcome(transactionOnNetwork, abiRegistry.getEndpoint("decrement"));
     });
 
-    it("should interact with 'lottery-esdt' (local testnet)", async function () {
+    it("should interact with 'lottery-dcdt' (local testnet)", async function () {
         this.timeout(140000);
 
-        let abiRegistry = await loadAbiRegistry("src/testdata/lottery-esdt.abi.json");
+        let abiRegistry = await loadAbiRegistry("src/testdata/lottery-dcdt.abi.json");
         let contract = new SmartContract({ abi: abiRegistry });
         let controller = new ContractController(provider);
 
@@ -490,7 +490,7 @@ describe("test smart contract interactor", function () {
         let deployTransaction = await prepareDeployment({
             contract: contract,
             deployer: alice,
-            codePath: "src/testdata/lottery-esdt.wasm",
+            codePath: "src/testdata/lottery-dcdt.wasm",
             gasLimit: 100000000,
             initArguments: [],
             chainID: network.ChainID,
@@ -503,7 +503,7 @@ describe("test smart contract interactor", function () {
 
         let startInteraction = <Interaction>(
             contract.methods
-                .start(["lucky", "EGLD", 1, null, null, 1, null, null])
+                .start(["lucky", "REWA", 1, null, null, 1, null, null])
                 .withGasLimit(30000000)
                 .withChainID(network.ChainID)
                 .withSender(alice.address)
@@ -564,7 +564,7 @@ describe("test smart contract interactor", function () {
         delete info.deadline;
 
         assert.deepEqual(info, {
-            token_identifier: "EGLD",
+            token_identifier: "REWA",
             ticket_price: new BigNumber("1"),
             tickets_left: new BigNumber(800),
             max_entries_per_user: new BigNumber(1),
@@ -573,10 +573,10 @@ describe("test smart contract interactor", function () {
         });
     });
 
-    it("should interact with 'lottery-esdt' (local testnet) using the SmartContractTransactionsFactory", async function () {
+    it("should interact with 'lottery-dcdt' (local testnet) using the SmartContractTransactionsFactory", async function () {
         this.timeout(140000);
 
-        let abiRegistry = await loadAbiRegistry("src/testdata/lottery-esdt.abi.json");
+        let abiRegistry = await loadAbiRegistry("src/testdata/lottery-dcdt.abi.json");
 
         let network = await provider.getNetworkConfig();
         await alice.sync(provider);
@@ -587,7 +587,7 @@ describe("test smart contract interactor", function () {
             abi: abiRegistry,
         });
 
-        const bytecode = await promises.readFile("src/testdata/lottery-esdt.wasm");
+        const bytecode = await promises.readFile("src/testdata/lottery-dcdt.wasm");
 
         // Deploy the contract
         const deployTransaction = factory.createTransactionForDeploy({
@@ -621,7 +621,7 @@ describe("test smart contract interactor", function () {
             sender: alice.address,
             contract: contractAddress,
             function: "start",
-            arguments: ["lucky", "EGLD", 1, null, null, 1, null, null],
+            arguments: ["lucky", "REWA", 1, null, null, 1, null, null],
             gasLimit: 30000000n,
         });
         startTransaction.nonce = BigInt(alice.account.nonce.valueOf());
@@ -685,7 +685,7 @@ describe("test smart contract interactor", function () {
         delete info.deadline;
 
         assert.deepEqual(info, {
-            token_identifier: "EGLD",
+            token_identifier: "REWA",
             ticket_price: new BigNumber("1"),
             tickets_left: new BigNumber(800),
             max_entries_per_user: new BigNumber(1),

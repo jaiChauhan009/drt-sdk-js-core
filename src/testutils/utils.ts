@@ -89,8 +89,8 @@ export function setupUnitTestWatcherTimeouts() {
     TransactionWatcher.DefaultTimeout = 42 * 42;
 }
 
-export function createAccountBalance(egld: number): BigNumber {
-    return new BigNumber(egld.toString() + "0".repeat(18));
+export function createAccountBalance(rewa: number): BigNumber {
+    return new BigNumber(rewa.toString() + "0".repeat(18));
 }
 
 export function b64TopicsToBytes(topics: string[]): Uint8Array[] {

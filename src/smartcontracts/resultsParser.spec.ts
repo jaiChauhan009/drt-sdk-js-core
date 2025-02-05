@@ -259,14 +259,14 @@ describe("test smart contract results parser", () => {
     });
 
     it("should parse contract event", async () => {
-        const abiRegistry = await loadAbiRegistry("src/testdata/esdt-safe.abi.json");
+        const abiRegistry = await loadAbiRegistry("src/testdata/dcdt-safe.abi.json");
         const eventDefinition = abiRegistry.getEvent("deposit");
 
         const event = new TransactionEventOnNetwork({
             topics: [
                 new TransactionEventTopic("ZGVwb3NpdA=="),
                 new TransactionEventTopic("cmzC1LRt1r10pMhNAnFb+FyudjGMq4G8CefCYdQUmmc="),
-                new TransactionEventTopic("AAAADFdFR0xELTAxZTQ5ZAAAAAAAAAAAAAAAAWQ="),
+                new TransactionEventTopic("AAAADFdSRVdBLTAxZTQ5ZAAAAAAAAAAAAAAAAWQ="),
             ],
             dataPayload: new TransactionEventData(Buffer.from("AAAAAAAAA9sAAAA=", "base64")),
         });
@@ -275,9 +275,9 @@ describe("test smart contract results parser", () => {
 
         assert.equal(
             (<IAddress>bundle.dest_address).bech32(),
-            "erd1wfkv9495dhtt6a9yepxsyu2mlpw2ua333j4cr0qfulpxr4q5nfnshgyqun",
+            "drt1wfkv9495dhtt6a9yepxsyu2mlpw2ua333j4cr0qfulpxr4q5nfns25nrld",
         );
-        assert.equal(bundle.tokens[0].token_identifier, "WEGLD-01e49d");
+        assert.equal(bundle.tokens[0].token_identifier, "WREWA-01e49d");
         assert.deepEqual(bundle.tokens[0].token_nonce, new BigNumber(0));
         assert.deepEqual(bundle.tokens[0].amount, new BigNumber(100));
         assert.deepEqual(bundle.event_data.tx_nonce, new BigNumber(987));

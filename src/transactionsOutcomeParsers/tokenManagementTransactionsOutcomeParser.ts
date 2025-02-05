@@ -35,12 +35,12 @@ export class TokenManagementTransactionsOutcomeParser {
         return events.map((event) => ({ tokenIdentifier: this.extractTokenIdentifier(event) }));
     }
 
-    parseRegisterMetaEsdt(transaction: TransactionOutcome | ITransactionOnNetwork): { tokenIdentifier: string }[] {
+    parseRegisterMetaDcdt(transaction: TransactionOutcome | ITransactionOnNetwork): { tokenIdentifier: string }[] {
         transaction = this.ensureTransactionOutcome(transaction);
 
         this.ensureNoError(transaction.logs.events);
 
-        const events = findEventsByIdentifier(transaction, "registerMetaESDT");
+        const events = findEventsByIdentifier(transaction, "registerMetaDCDT");
         return events.map((event) => ({ tokenIdentifier: this.extractTokenIdentifier(event) }));
     }
 
@@ -51,7 +51,7 @@ export class TokenManagementTransactionsOutcomeParser {
 
         this.ensureNoError(transaction.logs.events);
         const registerEvents = findEventsByIdentifier(transaction, "registerAndSetAllRoles");
-        const setRoleEvents = findEventsByIdentifier(transaction, "ESDTSetRole");
+        const setRoleEvents = findEventsByIdentifier(transaction, "DCDTSetRole");
 
         if (registerEvents.length !== setRoleEvents.length) {
             throw new ErrParseTransactionOutcome(
@@ -88,7 +88,7 @@ export class TokenManagementTransactionsOutcomeParser {
 
         this.ensureNoError(transaction.logs.events);
 
-        const events = findEventsByIdentifier(transaction, "ESDTSetRole");
+        const events = findEventsByIdentifier(transaction, "DCDTSetRole");
         return events.map((event) => this.getOutputForSetSpecialRoleEvent(event));
     }
 
@@ -114,7 +114,7 @@ export class TokenManagementTransactionsOutcomeParser {
 
         this.ensureNoError(transaction.logs.events);
 
-        const events = findEventsByIdentifier(transaction, "ESDTNFTCreate");
+        const events = findEventsByIdentifier(transaction, "DCDTNFTCreate");
         return events.map((event) => this.getOutputForNftCreateEvent(event));
     }
 
@@ -140,7 +140,7 @@ export class TokenManagementTransactionsOutcomeParser {
 
         this.ensureNoError(transaction.logs.events);
 
-        const events = findEventsByIdentifier(transaction, "ESDTLocalMint");
+        const events = findEventsByIdentifier(transaction, "DCDTLocalMint");
         return events.map((event) => this.getOutputForLocalMintEvent(event));
     }
 
@@ -173,7 +173,7 @@ export class TokenManagementTransactionsOutcomeParser {
 
         this.ensureNoError(transaction.logs.events);
 
-        const events = findEventsByIdentifier(transaction, "ESDTLocalBurn");
+        const events = findEventsByIdentifier(transaction, "DCDTLocalBurn");
         return events.map((event) => this.getOutputForLocalBurnEvent(event));
     }
 
@@ -201,7 +201,7 @@ export class TokenManagementTransactionsOutcomeParser {
 
         this.ensureNoError(transaction.logs.events);
 
-        const events = findEventsByIdentifier(transaction, "ESDTPause");
+        const events = findEventsByIdentifier(transaction, "DCDTPause");
         return events.map((event) => ({ tokenIdentifier: this.extractTokenIdentifier(event) }));
     }
 
@@ -210,7 +210,7 @@ export class TokenManagementTransactionsOutcomeParser {
 
         this.ensureNoError(transaction.logs.events);
 
-        const events = findEventsByIdentifier(transaction, "ESDTUnPause");
+        const events = findEventsByIdentifier(transaction, "DCDTUnPause");
         return events.map((event) => ({ tokenIdentifier: this.extractTokenIdentifier(event) }));
     }
 
@@ -224,7 +224,7 @@ export class TokenManagementTransactionsOutcomeParser {
 
         this.ensureNoError(transaction.logs.events);
 
-        const events = findEventsByIdentifier(transaction, "ESDTFreeze");
+        const events = findEventsByIdentifier(transaction, "DCDTFreeze");
         return events.map((event) => this.getOutputForFreezeEvent(event));
     }
 
@@ -257,7 +257,7 @@ export class TokenManagementTransactionsOutcomeParser {
 
         this.ensureNoError(transaction.logs.events);
 
-        const events = findEventsByIdentifier(transaction, "ESDTUnFreeze");
+        const events = findEventsByIdentifier(transaction, "DCDTUnFreeze");
         return events.map((event) => this.getOutputForUnfreezeEvent(event));
     }
 
@@ -290,7 +290,7 @@ export class TokenManagementTransactionsOutcomeParser {
 
         this.ensureNoError(transaction.logs.events);
 
-        const events = findEventsByIdentifier(transaction, "ESDTWipe");
+        const events = findEventsByIdentifier(transaction, "DCDTWipe");
         return events.map((event) => this.getOutputForWipeEvent(event));
     }
 
@@ -322,7 +322,7 @@ export class TokenManagementTransactionsOutcomeParser {
 
         this.ensureNoError(transaction.logs.events);
 
-        const events = findEventsByIdentifier(transaction, "ESDTNFTUpdateAttributes");
+        const events = findEventsByIdentifier(transaction, "DCDTNFTUpdateAttributes");
         return events.map((event) => this.getOutputForUpdateAttributesEvent(event));
     }
 
@@ -351,7 +351,7 @@ export class TokenManagementTransactionsOutcomeParser {
 
         this.ensureNoError(transaction.logs.events);
 
-        const events = findEventsByIdentifier(transaction, "ESDTNFTAddQuantity");
+        const events = findEventsByIdentifier(transaction, "DCDTNFTAddQuantity");
         return events.map((event) => this.getOutputForAddQuantityEvent(event));
     }
 
@@ -380,7 +380,7 @@ export class TokenManagementTransactionsOutcomeParser {
 
         this.ensureNoError(transaction.logs.events);
 
-        const events = findEventsByIdentifier(transaction, "ESDTNFTBurn");
+        const events = findEventsByIdentifier(transaction, "DCDTNFTBurn");
         return events.map((event) => this.getOutputForBurnQuantityEvent(event));
     }
 

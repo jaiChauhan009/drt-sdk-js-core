@@ -64,8 +64,8 @@ export class EndpointModifiers {
         this.onlyOwner = onlyOwner || false;
     }
 
-    isPayableInEGLD(): boolean {
-        return this.isPayableInToken("EGLD");
+    isPayableInREWA(): boolean {
+        return this.isPayableInToken("REWA");
     }
 
     isPayableInToken(token: string) {

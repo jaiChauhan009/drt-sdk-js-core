@@ -124,7 +124,7 @@ export class ApiNetworkProvider implements INetworkProvider {
     }
 
     async getMexPairs(pagination?: IPagination): Promise<PairOnNetwork[]> {
-        let url = `mex/pairs`;
+        let url = `moa/pairs`;
         if (pagination) {
             url = `${url}?from=${pagination.from}&size=${pagination.size}`;
         }

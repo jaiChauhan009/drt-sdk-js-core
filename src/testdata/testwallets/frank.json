@@ -2,7 +2,7 @@
     "version": 4,
     "id": "df70f3ef-bb40-4afd-8751-77b26b29356d",
     "address": "b37f5d130beb8885b90ab574a8bfcdd894ca531a7d3d1f3431158d77d6185fbb",
-    "bech32": "erd1kdl46yctawygtwg2k462307dmz2v55c605737dp3zkxh04sct7asqylhyv",
+    "bech32": "drt1kdl46yctawygtwg2k462307dmz2v55c605737dp3zkxh04sct7asacg58j",
     "crypto": {
         "ciphertext": "50e0992457078c3b1b5512e003ab911065fb64429dbc0dbec4d425670ecf410807de7ac5558568f70fac0c003ee9d090831e4e0801add602b89f0163735d11e8",
         "cipherparams": {

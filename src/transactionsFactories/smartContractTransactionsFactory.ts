@@ -96,7 +96,7 @@ export class SmartContractTransactionsFactory {
         let numberOfTokens = tokenTransfers.length;
 
         if (nativeTransferAmount && numberOfTokens) {
-            tokenTransfers.push(TokenTransfer.newFromEgldAmount(nativeTransferAmount));
+            tokenTransfers.push(TokenTransfer.newFromRewaAmount(nativeTransferAmount));
             nativeTransferAmount = 0n;
             numberOfTokens++;
         }
@@ -108,13 +108,13 @@ export class SmartContractTransactionsFactory {
             const transfer = tokenTransfers[0];
 
             if (this.tokenComputer.isFungible(transfer.token)) {
-                dataParts = this.dataArgsBuilder.buildDataPartsForESDTTransfer(transfer);
+                dataParts = this.dataArgsBuilder.buildDataPartsForDCDTTransfer(transfer);
             } else {
-                dataParts = this.dataArgsBuilder.buildDataPartsForSingleESDTNFTTransfer(transfer, receiver);
+                dataParts = this.dataArgsBuilder.buildDataPartsForSingleDCDTNFTTransfer(transfer, receiver);
                 receiver = options.sender;
             }
         } else if (numberOfTokens > 1) {
-            dataParts = this.dataArgsBuilder.buildDataPartsForMultiESDTNFTTransfer(receiver, tokenTransfers);
+            dataParts = this.dataArgsBuilder.buildDataPartsForMultiDCDTNFTTransfer(receiver, tokenTransfers);
             receiver = options.sender;
         }
 
