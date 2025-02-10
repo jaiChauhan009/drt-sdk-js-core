@@ -42,12 +42,12 @@ This package can make HTTP requests using `axios`, which is not bundled by defau
 npm install axios
 ```
 
-### @dharitri/sdk-bls-wasm
+### @terradharitri/sdk-bls-wasm
 
-This package requires `@dharitri/sdk-bls-wasm` for BLS (Boneh-Lynn-Shacham) cryptographic functions, which is not bundled by default. If you plan to use BLS functionality, make sure to install this optional dependency:
+This package requires `@terradharitri/sdk-bls-wasm` for BLS (Boneh-Lynn-Shacham) cryptographic functions, which is not bundled by default. If you plan to use BLS functionality, make sure to install this optional dependency:
 
 ```bash
-npm install @dharitri/sdk-bls-wasm
+npm install @terradharitri/sdk-bls-wasm
 ```
 
 ### bip39
