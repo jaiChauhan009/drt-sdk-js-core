@@ -93,29 +93,34 @@ export async function loadPassword(): Promise<string> {
     return await readTestWalletFileContents("password.txt");
 }
 
+
+export async function loadTestWallet(name: string): Promise<TestWallet> {
+    const fileContents = await readTestWalletFileContents(`${name}.json`);
+
+    let jsonContents;
+    try {
+        jsonContents = JSON.parse(fileContents);
+    } catch (error) {
+        console.error(`Error parsing JSON from ${name}.json:`, error);
+        throw error; // Re-throw the error for better traceability
+    }
+
+    const pemContents = await readTestWalletFileContents(name + ".pem");
+    const secretKey = UserSecretKey.fromPem(pemContents);
+    const publicKey = secretKey.generatePublicKey().valueOf();
+    return new TestWallet(new Address(publicKey), secretKey.hex(), jsonContents, pemContents);
+}
+
+
+
 // export async function loadTestWallet(name: string): Promise<TestWallet> {
-//     const jsonContents = JSON.parse(await readTestWalletFileContents(name + ".json"));
+//     const jsonContents = JSON.parse(await readTestWalletFileContents(`${name}.json`));
 //     const pemContents = await readTestWalletFileContents(name + ".pem");
 //     const secretKey = UserSecretKey.fromPem(pemContents);
 //     const publicKey = secretKey.generatePublicKey().valueOf();
 //     return new TestWallet(new Address(publicKey), secretKey.hex(), jsonContents, pemContents);
 // }
-export async function loadTestWallet(name: string): Promise<TestWallet> {
-    const filePath = `./testdata/${name}.json`; // or wherever your test data is
-    const data = await fs.promises.readFile(filePath, 'utf-8');
-    
-    // Log the data here before parsing
-    console.log('Data being parsed:', data);
 
-    try {
-        let parsedData = JSON.parse(data);  // This is where the error happens
-        return parsedData;
-    } catch (error) {
-        console.error('Error parsing JSON for wallet:', name);
-        console.error(error);
-        throw error;  // Re-throw the error after logging
-    }
-}
 
 
 async function readTestWalletFileContents(name: string): Promise<string> {

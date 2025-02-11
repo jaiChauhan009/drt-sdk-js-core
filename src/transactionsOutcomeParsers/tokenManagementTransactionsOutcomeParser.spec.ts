@@ -69,7 +69,7 @@ describe("test token management transactions outcome parser", () => {
             topics: b64TopicsToBytes(encodedTopics),
         });
 
-        encodedTopics = ["TkZULWYwMWQxZQ==", "", "", "RVNEVFJvbGVCdXJuRm9yQWxs"];
+        encodedTopics = ["TkZULWYwMWQxZQ==", "", "", "RENEVFJvbGVCdXJuRm9yQWxs"];
         const secondEvent = new TransactionEvent({
             address: "drt18s6a06ktr2v6fgxv4ffhauxvptssnaqlds45qgsrucemlwc8rawqfgxqg5",
             identifier: "DCDTSetBurnRoleForAll",
@@ -99,7 +99,7 @@ describe("test token management transactions outcome parser", () => {
         const identifier = "SEMIFNG-2c6d9f";
         const base64Identifier = Buffer.from(identifier).toString("base64");
 
-        const encodedTopics = [base64Identifier, "U0VNSQ==", "U0VNSUZORw==", "U2VtaUZ1bmdpYmxlRVNEVA=="];
+        const encodedTopics = [base64Identifier, "U0VNSQ==", "U0VNSUZORw==", "U2VtaUZ1bmdpYmxlRENEVA=="];
         const event = new TransactionEvent({
             address: "drt18s6a06ktr2v6fgxv4ffhauxvptssnaqlds45qgsrucemlwc8rawqfgxqg5",
             identifier: "issueSemiFungible",
@@ -414,7 +414,7 @@ describe("test token management transactions outcome parser", () => {
         const scResult = new SmartContractResult({
             sender: "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqzllls6prdez",
             receiver: "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf",
-            data: Buffer.from("RVNEVEZyZWV6ZUA0MTQxNDEyZDMyMzk2MzM0NjMzOQ==", "base64"),
+            data: Buffer.from("RENEVEZyZWV6ZUA0MTQxNDEyZDMyMzk2MzM0NjMzOQ==", "base64"),
             logs: transactionLogs,
         });
 
@@ -452,7 +452,7 @@ describe("test token management transactions outcome parser", () => {
         const scResult = new SmartContractResult({
             sender: "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqzllls6prdez",
             receiver: "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf",
-            data: Buffer.from("RVNEVEZyZWV6ZUA0MTQxNDEyZDMyMzk2MzM0NjMzOQ==", "base64"),
+            data: Buffer.from("RENEVEZyZWV6ZUA0MTQxNDEyZDMyMzk2MzM0NjMzOQ==", "base64"),
             logs: transactionLogs,
         });
 
@@ -490,7 +490,7 @@ describe("test token management transactions outcome parser", () => {
         const scResult = new SmartContractResult({
             sender: "drt1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqzllls6prdez",
             receiver: "drt1qyu5wthldzr8wx5c9ucg8kjagg0jfs53s8nr3zpz3hypefsdd8ssey5egf",
-            data: Buffer.from("RVNEVEZyZWV6ZUA0MTQxNDEyZDMyMzk2MzM0NjMzOQ==", "base64"),
+            data: Buffer.from("RENEVEZyZWV6ZUA0MTQxNDEyZDMyMzk2MzM0NjMzOQ==", "base64"),
             logs: transactionLogs,
         });
 
